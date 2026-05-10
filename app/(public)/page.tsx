@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { Shield, Map, Zap, Activity, ChevronRight, AlertTriangle } from "lucide-react";
 import Link from "next/link";
@@ -8,10 +7,8 @@ import { cn } from "@/lib/utils";
 export default function LandingPage() {
   return (
     <main className="relative min-h-screen flex flex-col">
-      <Navbar />
-      
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden -mt-16">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <Image

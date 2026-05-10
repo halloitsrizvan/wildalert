@@ -13,9 +13,16 @@ const navItems = [
   { name: "Communities", href: "/communities", icon: Shield },
 ];
 
-export function Navbar() {
+export function PublicNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+
+  const publicNavItems = [
+    { name: "Live Map", href: "/map", icon: Map },
+    { name: "Alert Feed", href: "/alerts", icon: Activity },
+    { name: "Intelligence", href: "/#features", icon: Shield },
+    ...(user?.role === 'community_authority' ? [{ name: "Command Center", href: "/dashboard", icon: BarChart3 }] : []),
+  ];
 
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/50 backdrop-blur-xl">
@@ -31,7 +38,7 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
+          {publicNavItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
@@ -72,7 +79,7 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" className="bg-black/95 border-white/10 text-white">
               <div className="flex flex-col gap-6 mt-12">
-                {navItems.map((item) => (
+                {publicNavItems.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}

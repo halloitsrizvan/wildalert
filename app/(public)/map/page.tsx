@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, MapPin, Activity, ChevronRight, Filter, Shield, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Navbar } from "@/components/layout/Navbar";
+
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
@@ -26,9 +26,7 @@ export default function PublicLiveMap() {
   if (authLoading || !user) return <div className="h-screen bg-black flex items-center justify-center text-primary uppercase font-bold animate-pulse">Syncing GIS Stream...</div>;
 
   return (
-    <div className="h-screen flex flex-col bg-black overflow-hidden">
-      <Navbar />
-      
+    <div className="h-screen flex flex-col bg-black overflow-hidden -mt-16">
       <div className="flex-1 relative flex overflow-hidden pt-16">
         {/* Fullscreen Map Background */}
         <div className="absolute inset-0 z-0">

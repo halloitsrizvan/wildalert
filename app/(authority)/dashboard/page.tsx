@@ -1,4 +1,4 @@
-import { StatCard } from "@/components/dashboard/StatCard";
+import { StatCard } from "@/components/authority/dashboard/StatCard";
 import { AlertTriangle, Shield, Map as MapIcon, Users, Activity, TrendingUp } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";

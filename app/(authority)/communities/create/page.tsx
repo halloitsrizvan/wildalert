@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/layout/Navbar";
+import { PublicNavbar } from "@/components/public/PublicNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -57,9 +57,8 @@ export default function CreateCommunityPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex items-center gap-4">
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="flex items-center gap-4">
           <Link href="/communities">
             <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-white">
               <ChevronLeft className="w-6 h-6" />

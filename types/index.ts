@@ -40,7 +40,7 @@ export interface Alert {
   };
 }
 
-export type UserRole = 'citizen' | 'ranger' | 'community_admin' | 'forest_officer';
+export type UserRole = 'user' | 'community_authority';
 
 export interface Community {
   id: string;

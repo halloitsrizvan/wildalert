@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { UserRole } from "@/types";
+export type UserRole = 'user' | 'community_authority';
 
 interface User {
   id: string;
@@ -24,7 +24,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for persisted session
     const savedUser = localStorage.getItem("wildalert_user");
     if (savedUser) {
       setUser(JSON.parse(savedUser));
@@ -35,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = (role: UserRole, communityId?: string) => {
     const newUser: User = {
       id: Math.random().toString(36).substr(2, 9),
-      name: role === 'community_admin' ? "Admin User" : "Citizen User",
+      name: role === 'community_authority' ? "Authority User" : "Community User",
       role,
       communityId
     };

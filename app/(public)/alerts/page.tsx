@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, Clock, MapPin, Shield, ChevronRight, Activity, Filter, Bell } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
+
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -16,11 +16,9 @@ export default function PublicAlertFeed() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
-      <Navbar />
-
       {/* Community Detection Banner */}
       {!geoLoading && currentCommunity && (
-        <div className="pt-20 bg-primary/20 border-b border-primary/20">
+        <div className="bg-primary/20 border-b border-primary/20">
           <div className="container mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -38,7 +36,7 @@ export default function PublicAlertFeed() {
       )}
       
       {/* Emergency Banner Section */}
-      <section className={cn("pb-8 bg-gradient-to-b from-red-500/10 to-transparent", currentCommunity ? "pt-8" : "pt-24")}>
+      <section className={cn("pb-8 bg-gradient-to-b from-red-500/10 to-transparent", currentCommunity ? "pt-8" : "pt-8")}>
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

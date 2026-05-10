@@ -18,7 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AlertTriangle, MapPin, Camera, Shield } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
+
 import { cn } from "@/lib/utils";
 import { useCommunity } from "@/hooks/useCommunity";
 import { useAuth } from "@/hooks/useAuth";
@@ -69,9 +69,7 @@ export default function ReportPage() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
-      <Navbar />
-      
-      <div className="flex-1 container mx-auto px-4 py-24 flex items-center justify-center">
+      <div className="flex-1 container mx-auto px-4 py-12 flex items-center justify-center">
         <Card className="w-full max-w-3xl bg-card border-white/5 overflow-hidden shadow-2xl relative">
           <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary via-amber-500 to-red-500" />
           
