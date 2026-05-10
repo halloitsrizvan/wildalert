@@ -9,7 +9,7 @@ import {
   signOut,
   User as FirebaseUser 
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, updateDoc, increment } from "firebase/firestore";
 
 export type UserRole = 'user' | 'community_authority';
 
@@ -39,12 +39,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
-        // Get user profile from Firestore
         const docRef = doc(db, "users", fbUser.uid);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists()) {
-          setUser(docSnap.data() as UserProfile);
+          let userData = docSnap.data() as UserProfile;
+
+          // SELF-HEALING: If authority has no communityId, create one now
+          if (userData.role === 'community_authority' && !userData.communityId) {
+            const commRef = doc(collection(db, "communities"));
+            const newComm = {
+              name: userData.name,
+              district: "Unspecified",
+              description: `Operational zone for ${userData.name}`,
+              memberCount: 0,
+              activeAlerts: 0,
+              riskLevel: "low" as const,
+              createdAt: Date.now(),
+              authorityId: fbUser.uid
+            };
+            await setDoc(commRef, newComm);
+            await setDoc(docRef, { ...userData, communityId: commRef.id }, { merge: true });
+            userData = { ...userData, communityId: commRef.id };
+          }
+
+          setUser(userData);
         } else {
           setUser(null);
         }
@@ -64,17 +83,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string, role: UserRole, extraData: any = {}) => {
     const { user: fbUser } = await createUserWithEmailAndPassword(auth, email, password);
     
+    let communityId = extraData.communityId || null;
+
+    // If authority, create a new community record
+    if (role === 'community_authority' && extraData.name) {
+      const commRef = doc(collection(db, "communities"));
+      await setDoc(commRef, {
+        name: extraData.name,
+        district: extraData.district || "Unspecified",
+        description: `Official intelligence zone for ${extraData.name}`,
+        memberCount: 0,
+        activeAlerts: 0,
+        riskLevel: "low",
+        createdAt: Date.now(),
+        authorityId: fbUser.uid
+      });
+      communityId = commRef.id;
+    }
+
     const profile: UserProfile = {
       uid: fbUser.uid,
       email: fbUser.email!,
       name: extraData.name || (role === 'community_authority' ? "Authority User" : "Community User"),
       role,
-      communityId: extraData.communityId || null,
+      communityId,
       createdAt: Date.now(),
       ...extraData
     };
 
     await setDoc(doc(db, "users", fbUser.uid), profile);
+
+    // If citizen, increment member count in their community
+    if (role === 'user' && communityId) {
+      const communityRef = doc(db, "communities", communityId);
+      await updateDoc(communityRef, {
+        memberCount: increment(1)
+      });
+    }
+
     setUser(profile);
   };
 

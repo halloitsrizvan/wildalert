@@ -34,8 +34,25 @@ export default function PublicLiveMap() {
           setLocating(false);
         },
         (error) => {
-          console.error("Error getting location:", error);
+          let message = "Unknown Location Error";
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              message = "Location access denied.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              message = "Location information unavailable.";
+              break;
+            case error.TIMEOUT:
+              message = "Location request timed out.";
+              break;
+          }
+          console.warn(`[GIS] ${message}`, error);
           setLocating(false);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
         }
       );
     } else {

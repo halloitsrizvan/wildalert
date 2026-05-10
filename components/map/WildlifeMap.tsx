@@ -29,6 +29,7 @@ export default function WildlifeMap({
   zoom = 8
 }: WildlifeMapProps) {
   const [L, setL] = useState<any>(null);
+  const [communities, setCommunities] = useState<Community[]>([]);
 
   useEffect(() => {
     // Import leaflet only on client side
@@ -44,6 +45,17 @@ export default function WildlifeMap({
         shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
       });
     });
+
+    // Fetch communities for boundaries
+    async function fetch() {
+      try {
+        const data = await getCommunities();
+        setCommunities(data);
+      } catch (err) {
+        console.error("Failed to fetch communities for map", err);
+      }
+    }
+    fetch();
   }, []);
 
   if (!L) return (
@@ -62,6 +74,38 @@ export default function WildlifeMap({
     return null;
   };
 
+  // Component to show user's current location pulse
+  const UserLocationMarker = () => {
+    const [pos, setPos] = useState<[number, number] | null>(null);
+    useEffect(() => {
+      if (typeof window !== "undefined" && "geolocation" in navigator) {
+        const watchId = navigator.geolocation.watchPosition(
+          (p) => setPos([p.coords.latitude, p.coords.longitude]),
+          () => {},
+          { enableHighAccuracy: true }
+        );
+        return () => navigator.geolocation.clearWatch(watchId);
+      }
+    }, []);
+
+    if (!pos) return null;
+    return (
+      <Fragment>
+        <Circle 
+          center={pos} 
+          radius={50} 
+          pathOptions={{ color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.8, weight: 2 }} 
+        />
+        <Circle 
+          center={pos} 
+          radius={400} 
+          pathOptions={{ color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.1, weight: 1, dashArray: '5, 10' }} 
+          className="animate-pulse"
+        />
+      </Fragment>
+    );
+  };
+
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden border border-white/5 shadow-2xl relative">
       <MapContainer 
@@ -71,6 +115,7 @@ export default function WildlifeMap({
         scrollWheelZoom={true}
       >
         <MapRecenter />
+        <UserLocationMarker />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
