@@ -3,8 +3,12 @@
 import { useEffect, useState, Fragment } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { WildlifeReport, Village, Ranger, Community } from "@/types";
+import { WildlifeReport, Village, Ranger, Community, Alert } from "@/types";
 import { getCommunities } from "@/lib/communities";
+import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { AlertTriangle, MapPin } from "lucide-react";
 
 // Dynamic import for Leaflet components to avoid SSR issues
 const MapContainer = dynamic(() => import("react-leaflet").then(mod => mod.MapContainer), { ssr: false });
@@ -15,16 +19,20 @@ const Circle = dynamic(() => import("react-leaflet").then(mod => mod.Circle), { 
 const Polyline = dynamic(() => import("react-leaflet").then(mod => mod.Polyline), { ssr: false });
 const Polygon = dynamic(() => import("react-leaflet").then(mod => mod.Polygon), { ssr: false });
 
-const MapViewHandler = ({ center, zoom }: { center: [number, number], zoom: number }) => {
-  const map = dynamic(() => import("react-leaflet").then(mod => mod.useMap()), { ssr: false }) as any;
-  // Note: we'll use a simpler approach within the component for better SSR compatibility
-  return null;
-};
+interface WildlifeMapProps {
+  reports?: WildlifeReport[];
+  villages?: Village[];
+  rangers?: Ranger[];
+  alerts?: Alert[];
+  center?: [number, number];
+  zoom?: number;
+}
 
 export default function WildlifeMap({
   reports = [],
   villages = [],
   rangers = [],
+  alerts = [],
   center = [10.5276, 76.2144], // Thrissur, Kerala center
   zoom = 8
 }: WildlifeMapProps) {
@@ -64,13 +72,29 @@ export default function WildlifeMap({
     </div>
   );
 
-  // Helper component to handle map re-centering
-  const MapRecenter = () => {
+  // Helper component to handle map re-centering and size invalidation
+  const MapViewHandler = () => {
     const { useMap } = require("react-leaflet");
     const map = useMap();
+    
     useEffect(() => {
+      // Small delay to ensure container is fully rendered
+      const timer = setTimeout(() => {
+        map.invalidateSize();
+      }, 100);
+      
       map.setView(center, zoom);
-    }, [center, zoom]);
+      
+      // Also handle window resizes
+      const handleResize = () => map.invalidateSize();
+      window.addEventListener('resize', handleResize);
+      
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('resize', handleResize);
+      };
+    }, [map, center, zoom]);
+    
     return null;
   };
 
@@ -114,7 +138,7 @@ export default function WildlifeMap({
         className="w-full h-full z-0"
         scrollWheelZoom={true}
       >
-        <MapRecenter />
+        <MapViewHandler />
         <UserLocationMarker />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
@@ -156,61 +180,96 @@ export default function WildlifeMap({
         {reports.map((report) => (
           <Fragment key={report.id}>
             <Marker position={[report.location.lat, report.location.lng]}>
-              <Popup className="custom-popup">
-                <div className="p-2 min-w-[200px]">
-                  <h3 className="font-bold text-lg mb-1">{report.animalType} Sighting</h3>
-                  <p className="text-xs text-white mb-2">{report.location.name}</p>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${
-                      report.severity === 'critical' ? 'bg-red-500/20 text-red-500' : 'bg-amber-500/20 text-amber-500'
-                    }`}>
-                      {report.severity}
+              <Popup>
+                <div className="p-3 min-w-[200px] bg-zinc-950 text-white rounded-xl">
+                  <h3 className="font-black text-lg mb-1 uppercase tracking-tight">{report.animalType} Sighting</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge className={cn(
+                      "text-[9px] font-black uppercase px-1.5 py-0.5",
+                      report.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'
+                    )}>
+                      {report.severity} RISK
+                    </Badge>
+                    <span className="text-[9px] text-white/40 font-bold uppercase">
+                      {report.timestamp ? formatDistanceToNow(report.timestamp.toDate()) + " ago" : "Just now"}
                     </span>
-                    <span className="text-[10px] text-white">2 mins ago</span>
                   </div>
-                  <p className="text-sm">{report.description}</p>
+                  <p className="text-xs text-white/70 mb-4 leading-relaxed italic">"{report.description}"</p>
+                  
+                  <div className="flex items-center justify-between gap-4 pt-3 border-t border-white/10">
+                    <div className="text-[10px] text-primary font-black uppercase tracking-widest flex items-center gap-2">
+                      <MapPin className="w-3 h-3" />
+                      {report.location.name}
+                    </div>
+                    <a 
+                      href={`https://www.google.com/maps?q=${report.location.lat},${report.location.lng}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[9px] font-black uppercase text-white bg-primary px-2 py-1 rounded hover:bg-primary/80 transition-colors no-underline"
+                    >
+                      NAVIGATE
+                    </a>
+                  </div>
                 </div>
               </Popup>
             </Marker>
             {report.severity === 'critical' && (
               <Circle 
                 center={[report.location.lat, report.location.lng]} 
-                radius={2000} 
-                pathOptions={{ color: 'red', fillColor: 'red', fillOpacity: 0.1, weight: 1 }} 
+                radius={1500} 
+                pathOptions={{ color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.05, weight: 1, dashArray: '5, 10' }} 
               />
             )}
           </Fragment>
         ))}
 
-        {/* Village Markers */}
-        {villages.map((village) => (
-          <Marker 
-            key={village.id} 
-            position={[village.location.lat, village.location.lng]}
-          >
-            <Popup>
-              <div className="p-1">
-                <h3 className="font-bold">{village.name} Village</h3>
-                <p className="text-xs">Risk Level: {village.riskLevel}</p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* Ranger Markers */}
-        {rangers.map((ranger) => (
-          <Marker 
-            key={ranger.id} 
-            position={[ranger.location.lat, ranger.location.lng]}
-          >
-            <Popup>
-              <div className="p-1">
-                <h3 className="font-bold">{ranger.name}</h3>
-                <p className="text-xs">{ranger.rank}</p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+        {/* Emergency Alert Dots */}
+        {(alerts || []).map((alert) => {
+          if (!alert.location) return null;
+          return (
+            <Fragment key={alert.id}>
+              <Marker 
+                position={[alert.location.lat, alert.location.lng]}
+                icon={L.divIcon({
+                  className: 'custom-div-icon',
+                  html: `<div class="w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-ping"></div>`,
+                  iconSize: [16, 16],
+                  iconAnchor: [8, 8]
+                })}
+              >
+                <Popup>
+                  <div className="p-3 bg-red-950 text-white rounded-xl border border-red-500/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className="w-4 h-4 text-red-500" />
+                      <span className="text-[10px] font-black uppercase text-red-500">Emergency Broadcast</span>
+                    </div>
+                    <h3 className="font-black text-sm uppercase mb-1">{alert.title}</h3>
+                    <p className="text-xs text-red-200/70 mb-4">{alert.message}</p>
+                    <a 
+                      href={`https://www.google.com/maps?q=${alert.location.lat},${alert.location.lng}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block text-[9px] font-black uppercase text-white bg-red-600 px-3 py-1.5 rounded hover:bg-red-700 transition-colors no-underline"
+                    >
+                      OPEN IN GOOGLE MAPS
+                    </a>
+                  </div>
+                </Popup>
+              </Marker>
+              <Circle 
+                center={[alert.location.lat, alert.location.lng]} 
+                radius={2500} 
+                pathOptions={{ 
+                  color: '#ef4444', 
+                  fillColor: '#ef4444', 
+                  fillOpacity: 0.1, 
+                  weight: 2,
+                  dashArray: '10, 10'
+                }} 
+              />
+            </Fragment>
+          );
+        })}
       </MapContainer>
 
       {/* Map Legend */}

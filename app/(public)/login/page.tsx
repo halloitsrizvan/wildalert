@@ -64,6 +64,7 @@ export default function LoginPage() {
       } else {
         await signUp(email, password, role, { 
           name,
+          phoneNumber,
           communityId: role === 'user' ? selectedCommunityId : null,
           createdAt: Date.now()
         });
@@ -161,19 +162,36 @@ export default function LoginPage() {
               {/* Input Fields */}
               <div className="space-y-6">
                 {mode === 'signup' && (
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-end px-1">
-                      <label className="text-[10px] font-black uppercase text-white tracking-widest">{role === 'user' ? "Your Full Name" : "Regional Sector Name"}</label>
-                      <User className="w-3 h-3 text-primary" />
+                  <>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-end px-1">
+                        <label className="text-[10px] font-black uppercase text-white tracking-widest">{role === 'user' ? "Your Full Name" : "Regional Sector Name"}</label>
+                        <User className="w-3 h-3 text-primary" />
+                      </div>
+                      <input 
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full bg-black border border-white/10 rounded-xl h-16 px-8 text-white placeholder:text-white/10 focus:outline-none focus:border-primary transition-all font-bold"
+                        placeholder={role === 'user' ? "Enter name" : "e.g. Munnar South"}
+                      />
                     </div>
-                    <input 
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full bg-black border border-white/10 rounded-xl h-16 px-8 text-white placeholder:text-white/10 focus:outline-none focus:border-primary transition-all font-bold"
-                      placeholder={role === 'user' ? "Enter name" : "e.g. Munnar South"}
-                    />
-                  </div>
+
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-end px-1">
+                        <label className="text-[10px] font-black uppercase text-white tracking-widest">Contact Signal (Phone)</label>
+                        <Phone className="w-3 h-3 text-primary" />
+                      </div>
+                      <input 
+                        required
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="w-full bg-black border border-white/10 rounded-xl h-16 px-8 text-white placeholder:text-white/10 focus:outline-none focus:border-primary transition-all font-bold"
+                        placeholder="e.g. +91 98765 43210"
+                      />
+                    </div>
+                  </>
                 )}
 
                 {/* Community Selection for Citizens */}

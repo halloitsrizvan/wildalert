@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { StatCard } from "@/components/authority/dashboard/StatCard";
-import { AlertTriangle, Shield, Map as MapIcon, Users, Activity, TrendingUp, Clock, RefreshCw } from "lucide-react";
+import { AlertTriangle, Shield, Map as MapIcon, Users, Activity, TrendingUp, Clock, RefreshCw, Phone, MessageSquare, CheckCircle, Radio, X, Plus } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { db } from "@/lib/firebase";
-import { collection, query, where, onSnapshot, orderBy, limit, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, orderBy, limit, doc, getDoc, updateDoc } from "firebase/firestore";
 import { WildlifeReport, Alert, Community } from "@/types";
 import { formatDistanceToNow } from "date-fns";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
@@ -19,7 +21,80 @@ export default function AdminDashboard() {
   const [reports, setReports] = useState<WildlifeReport[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [realMemberCount, setRealMemberCount] = useState(0);
+  const [citizenNumbers, setCitizenNumbers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Simulation State
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simLogs, setSimLogs] = useState<string[]>([]);
+  const [simProgress, setSimProgress] = useState(0);
+
+  const triggerSimulation = (report: WildlifeReport) => {
+    setIsSimulating(true);
+    setSimProgress(0);
+    setSimLogs([`[SYSTEM] Initializing Command Protocol for ${report.animalType} at ${report.location.name}...`]);
+    
+    const initialSteps = [
+      "Connecting to Community Secure Gateway...",
+      `Fetching ${realMemberCount} registered citizen nodes...`,
+      "Generating encrypted WhatsApp emergency templates...",
+      "DISPATCHING BULK WHATSAPP: [WildAlert] EMERGENCY! Wildlife detected in your area.",
+      "WhatsApp Dispatch: 100% COMPLETE",
+      "Activating Automated Voice Call System...",
+    ];
+
+    const finalSteps = [
+      "UPDATING LOCAL AUTHORITIES: Ranger Unit 4 dispatched.",
+      "PROTOCOL COMPLETE: Sector notified successfully."
+    ];
+
+    let currentDelay = 0;
+    const totalSteps = initialSteps.length + citizenNumbers.length + finalSteps.length;
+
+    // Run Initial Steps
+    initialSteps.forEach((step, index) => {
+      currentDelay = (index + 1) * 800;
+      setTimeout(() => {
+        setSimLogs(prev => [...prev, `[LOG] ${step}`]);
+        setSimProgress(((index + 1) / totalSteps) * 100);
+      }, currentDelay);
+    });
+
+    // Run Calling Steps for actual numbers
+    const callStartTime = initialSteps.length * 800;
+    citizenNumbers.forEach((num, index) => {
+      setTimeout(() => {
+        setSimLogs(prev => [...prev, `[CALL] Dialing ${num || "+91 XXXXX XXXXX"}... CONNECTED`]);
+        setSimProgress(((initialSteps.length + index + 1) / totalSteps) * 100);
+      }, callStartTime + (index * 600));
+    });
+
+    // Run Final Steps
+    const finalStartTime = callStartTime + (citizenNumbers.length * 600) + 800;
+    finalSteps.forEach((step, index) => {
+      setTimeout(() => {
+        setSimLogs(prev => [...prev, `[LOG] ${step}`]);
+        setSimProgress(((initialSteps.length + citizenNumbers.length + index + 1) / totalSteps) * 100);
+        if (index === finalSteps.length - 1) {
+          setTimeout(() => {
+            setIsSimulating(false);
+            setSimLogs([]);
+          }, 3000);
+        }
+      }, finalStartTime + (index * 800));
+    });
+  };
+
+  const handleStatusUpdate = async (reportId: string, currentStatus: string) => {
+    const nextStatus = currentStatus === 'pending' ? 'verified' : currentStatus === 'verified' ? 'resolved' : 'pending';
+    try {
+      await updateDoc(doc(db, "reports", reportId), {
+        status: nextStatus
+      });
+    } catch (err) {
+      console.error("Status update failed", err);
+    }
+  };
 
   useEffect(() => {
     if (!user?.communityId) return;
@@ -72,6 +147,8 @@ export default function AdminDashboard() {
 
     const unsubMembers = onSnapshot(membersQuery, (snapshot) => {
       setRealMemberCount(snapshot.size);
+      const numbers = snapshot.docs.map(doc => doc.data().phoneNumber).filter(Boolean);
+      setCitizenNumbers(numbers);
       setLoading(false);
     });
 
@@ -100,8 +177,14 @@ export default function AdminDashboard() {
           </h1>
           <p className="text-white/60 font-medium uppercase tracking-[0.2em] text-[10px] mt-2">Operational Wildlife Intelligence Unit</p>
         </div>
-        <div className="text-right">
-          <Badge variant="outline" className="bg-primary/10 border-primary/30 text-primary px-3 py-1 text-[10px] uppercase font-black tracking-widest">
+        <div className="flex items-center gap-4">
+          <Link href="/report">
+            <Button className="bg-white text-black font-black uppercase text-[10px] tracking-widest px-6 h-11 rounded-xl hover:scale-105 transition-transform flex gap-2">
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+              Submit Field Intel
+            </Button>
+          </Link>
+          <Badge variant="outline" className="bg-primary/10 border-primary/30 text-primary px-3 py-1 text-[10px] uppercase font-black tracking-widest h-11 flex items-center">
             Level {community?.riskLevel || "Low"} Risk Node
           </Badge>
         </div>
@@ -109,44 +192,58 @@ export default function AdminDashboard() {
 
       {/* KPI Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard 
-          title="Incident Feed" 
-          value={reports.length} 
-          change="Last 24 hours" 
-          trend={reports.length > 3 ? "up" : "neutral"} 
-          icon={AlertTriangle} 
-        />
-        <StatCard 
-          title="Active Alerts" 
-          value={community?.activeAlerts || 0} 
-          change="Broadcasted now" 
-          trend="neutral" 
-          icon={Shield} 
-        />
-        <StatCard 
-          title="Member Base" 
-          value={realMemberCount} 
-          change="Registered citizens" 
-          trend="up" 
-          icon={Users} 
-        />
-        <StatCard 
-          title="Sector Index" 
-          value={`${community?.riskLevel.toUpperCase()}`} 
-          change="Calculated daily" 
-          trend="neutral" 
-          icon={Activity} 
-        />
+        <Link href="/reports/manage" className="block transition-transform hover:scale-[1.02]">
+          <StatCard 
+            title="Incident Feed" 
+            value={reports.length} 
+            change="Last 24 hours" 
+            trend={reports.length > 3 ? "up" : "neutral"} 
+            icon={AlertTriangle} 
+          />
+        </Link>
+        <Link href="/alerts/manage" className="block transition-transform hover:scale-[1.02]">
+          <StatCard 
+            title="Active Alerts" 
+            value={community?.activeAlerts || 0} 
+            change="Broadcasted now" 
+            trend="neutral" 
+            icon={Shield} 
+          />
+        </Link>
+        <Link href="/members" className="block transition-transform hover:scale-[1.02]">
+          <StatCard 
+            title="Member Base" 
+            value={realMemberCount} 
+            change="Registered citizens" 
+            trend="up" 
+            icon={Users} 
+          />
+        </Link>
+        <Link href="/analytics" className="block transition-transform hover:scale-[1.02]">
+          <StatCard 
+            title="Sector Index" 
+            value={`${community?.riskLevel.toUpperCase()}`} 
+            change="Calculated daily" 
+            trend="neutral" 
+            icon={Activity} 
+          />
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Reports Table */}
         <Card className="lg:col-span-2 bg-zinc-950/50 border-white/5 backdrop-blur-sm overflow-hidden">
-          <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6">
+          <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-black text-white uppercase tracking-widest flex items-center gap-3">
               <TrendingUp className="w-4 h-4 text-primary" />
               Live Activity Stream
             </CardTitle>
+            <Link href="/report">
+              <Button className="h-10 px-6 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all flex gap-2">
+                <Plus className="w-3.5 h-3.5" />
+                Add Sighting
+              </Button>
+            </Link>
           </CardHeader>
           <CardContent className="p-0">
             {reports.length === 0 ? (
@@ -157,10 +254,11 @@ export default function AdminDashboard() {
               <Table>
                 <TableHeader>
                   <TableRow className="border-white/5 hover:bg-transparent bg-white/5">
-                    <TableHead className="text-white font-black uppercase text-[10px] tracking-widest px-8">Animal</TableHead>
+                    <TableHead className="text-white font-black uppercase text-[10px] tracking-widest">Animal</TableHead>
                     <TableHead className="text-white font-black uppercase text-[10px] tracking-widest">Location</TableHead>
                     <TableHead className="text-white font-black uppercase text-[10px] tracking-widest">Severity</TableHead>
                     <TableHead className="text-white font-black uppercase text-[10px] tracking-widest">Status</TableHead>
+                    <TableHead className="text-white font-black uppercase text-[10px] tracking-widest">Actions</TableHead>
                     <TableHead className="text-white font-black uppercase text-[10px] tracking-widest text-right px-8">Observed</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -186,6 +284,27 @@ export default function AdminDashboard() {
                             report.status === 'pending' ? "bg-amber-500 animate-pulse" : "bg-blue-500"
                           )} />
                           <span className="text-[10px] uppercase font-black text-white/40 group-hover:text-white transition-colors">{report.status}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2  group-hover:opacity-100 transition-opacity">
+                           <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-8 px-2 text-primary hover:bg-primary/10"
+                            onClick={() => handleStatusUpdate(report.id, report.status)}
+                            title="Cycle Status"
+                           >
+                             <RefreshCw className="w-4 h-4" />
+                           </Button>
+                           <Button 
+                            size="sm" 
+                            className="h-8 px-3 bg-red-500 hover:bg-red-600 text-white text-[9px] font-black uppercase tracking-widest gap-2"
+                            onClick={() => triggerSimulation(report)}
+                           >
+                             <Radio className="w-3.5 h-3.5" />
+                             Alert
+                           </Button>
                         </div>
                       </TableCell>
                       <TableCell className="text-white/40 text-[10px] font-black uppercase text-right px-8">
@@ -232,12 +351,93 @@ export default function AdminDashboard() {
                 </div>
               ))
             )}
-            <button className="w-full py-4 mt-2 text-[10px] font-black text-primary hover:text-primary/80 transition-all uppercase tracking-[0.2em] border border-primary/10 rounded-xl hover:bg-primary/5">
-              History Database
-            </button>
+            <Link href="/reports/manage" className="block w-full">
+              <button className="w-full py-4 mt-2 text-[10px] font-black text-primary hover:text-primary/80 transition-all uppercase tracking-[0.2em] border border-primary/10 rounded-xl hover:bg-primary/5">
+                History Database
+              </button>
+            </Link>
           </CardContent>
         </Card>
       </div>
+
+      {/* Command Protocol Simulation Overlay */}
+      {isSimulating && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
+           <div className="w-full max-w-2xl bg-zinc-950 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(239,68,68,0.2)]">
+              <div className="p-8 border-b border-white/10 bg-white/5 flex items-center justify-between">
+                 <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-2xl bg-red-500/20 flex items-center justify-center animate-pulse">
+                       <Radio className="w-6 h-6 text-red-500" />
+                    </div>
+                    <div>
+                       <h3 className="text-sm font-black text-white uppercase tracking-[0.2em]">Community Command Protocol</h3>
+                       <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse">Emergency Broadcast in Progress...</p>
+                    </div>
+                 </div>
+                 <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-white/20 hover:text-white"
+                  onClick={() => setIsSimulating(false)}
+                 >
+                   <X className="w-5 h-5" />
+                 </Button>
+              </div>
+
+              <div className="p-8 space-y-6">
+                 {/* Progress Bar */}
+                 <div className="space-y-3">
+                    <div className="flex justify-between items-end">
+                       <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Signal Saturation</span>
+                       <span className="text-xl font-black text-white">{Math.round(simProgress)}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                       <div 
+                        className="h-full bg-red-500 transition-all duration-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]"
+                        style={{ width: `${simProgress}%` }}
+                       />
+                    </div>
+                 </div>
+
+                 {/* Console Logs */}
+                 <div className="h-64 bg-black/50 rounded-2xl border border-white/5 p-6 font-mono text-[10px] space-y-2 overflow-y-auto">
+                    {simLogs.map((log, i) => (
+                      <div key={i} className={cn(
+                        "flex gap-3",
+                        log.startsWith('[SYSTEM]') ? "text-primary" : "text-white/40"
+                      )}>
+                        <span className="opacity-20">[{new Date().toLocaleTimeString([], { hour12: false })}]</span>
+                        <span className="font-bold">{log}</span>
+                      </div>
+                    ))}
+                    {simProgress < 100 && (
+                      <div className="flex gap-2 text-white animate-pulse">
+                         <span className="opacity-20">_</span>
+                         <span>Injecting Tactical Data...</span>
+                      </div>
+                    )}
+                 </div>
+
+                 <div className="flex gap-4">
+                    <div className="flex-1 p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-4">
+                       <MessageSquare className="w-5 h-5 text-green-500" />
+                       <div>
+                          <p className="text-[10px] font-black text-white uppercase">WhatsApp Meta</p>
+                          <p className="text-[9px] text-white/40 font-bold">API STATUS: CONNECTED</p>
+                       </div>
+                    </div>
+                    <div className="flex-1 p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-4">
+                       <Phone className="w-5 h-5 text-blue-500" />
+                       <div>
+                          <p className="text-[10px] font-black text-white uppercase">Voice Bridge</p>
+                          <p className="text-[9px] text-white/40 font-bold">TRUNKS: ACTIVE</p>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      )}
     </div>
   );
 }
