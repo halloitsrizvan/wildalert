@@ -16,7 +16,7 @@ export default function VillageMonitoringPage() {
             <Activity className="w-8 h-8 text-primary" />
             Village Monitoring System
           </h1>
-          <p className="text-muted-foreground">Real-time safety and intrusion monitoring for forest-border settlements.</p>
+          <p className="text-white">Real-time safety and intrusion monitoring for forest-border settlements.</p>
         </div>
       </div>
 
@@ -24,11 +24,11 @@ export default function VillageMonitoringPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="bg-card border-white/5">
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Total Population At Risk</CardTitle>
+            <CardTitle className="text-xs font-bold text-white uppercase tracking-widest">Total Population At Risk</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-black text-white">9,700+</div>
-            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+            <p className="text-xs text-white mt-1 flex items-center gap-1">
               <Users className="w-3 h-3" />
               Across 3 primary sectors
             </p>
@@ -36,11 +36,11 @@ export default function VillageMonitoringPage() {
         </Card>
         <Card className="bg-card border-white/5">
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest">System Health</CardTitle>
+            <CardTitle className="text-xs font-bold text-white uppercase tracking-widest">System Health</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-black text-primary">OPTIMAL</div>
-            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+            <p className="text-xs text-white mt-1 flex items-center gap-1">
               <ShieldCheck className="w-3 h-3" />
               All sensors online
             </p>
@@ -48,11 +48,11 @@ export default function VillageMonitoringPage() {
         </Card>
         <Card className="bg-card border-white/5">
           <CardHeader className="pb-2">
-            <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Intrusion Buffer</CardTitle>
+            <CardTitle className="text-xs font-bold text-white uppercase tracking-widest">Intrusion Buffer</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-black text-amber-500">2.4 KM</div>
-            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+            <p className="text-xs text-white mt-1 flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" />
               Nearest herd detected
             </p>
@@ -73,10 +73,10 @@ export default function VillageMonitoringPage() {
               <div className="flex justify-between items-start">
                 <div className="space-y-1">
                   <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                    <Home className="w-5 h-5 text-muted-foreground" />
+                    <Home className="w-5 h-5 text-white" />
                     {village.name}
                   </h3>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-3 text-xs text-white">
                     <span className="flex items-center gap-1"><Users className="w-3 h-3" /> {village.population} pop.</span>
                     <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> Sector {village.id.slice(1)}</span>
                   </div>
@@ -91,7 +91,7 @@ export default function VillageMonitoringPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground uppercase tracking-widest">Village Fortification</span>
+                    <span className="text-white uppercase tracking-widest">Village Fortification</span>
                     <span className="text-white font-bold">84%</span>
                   </div>
                   <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
@@ -101,11 +101,11 @@ export default function VillageMonitoringPage() {
 
                 <div className="grid grid-cols-2 gap-4 pt-2">
                   <div className="p-3 rounded-lg bg-white/5 border border-white/5">
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Last Alert</div>
+                    <div className="text-[10px] text-white uppercase tracking-widest mb-1">Last Alert</div>
                     <div className="text-xs text-white font-medium">3 days ago</div>
                   </div>
                   <div className="p-3 rounded-lg bg-white/5 border border-white/5">
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">Ranger Support</div>
+                    <div className="text-[10px] text-white uppercase tracking-widest mb-1">Ranger Support</div>
                     <div className="text-xs text-white font-medium">1.2 KM distance</div>
                   </div>
                 </div>

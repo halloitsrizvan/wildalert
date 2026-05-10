@@ -59,7 +59,7 @@ export default function LandingPage() {
                 <div key={i} className="glass-dark p-4 rounded-xl border-white/5">
                   <div className="flex items-center gap-3 mb-1">
                     <stat.icon className="w-4 h-4 text-primary" />
-                    <span className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</span>
+                    <span className="text-xs text-white uppercase tracking-wider">{stat.label}</span>
                   </div>
                   <div className="text-2xl font-bold text-white">{stat.value}</div>
                 </div>
@@ -75,7 +75,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Precision Monitoring</h2>
-            <p className="text-white/70 max-w-xl mx-auto">Cutting-edge technology for human-wildlife coexistence in the Western Ghats.</p>
+            <p className="text-white max-w-xl mx-auto">Cutting-edge technology for human-wildlife coexistence in the Western Ghats.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -115,7 +115,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase tracking-tighter">Mission Protocol</h2>
-            <p className="text-white/50">Our streamlined approach to human-wildlife conflict resolution.</p>
+            <p className="text-white">Our streamlined approach to human-wildlife conflict resolution.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
@@ -147,7 +147,7 @@ export default function LandingPage() {
                   <span className="text-2xl font-black text-primary">{item.step}</span>
                 </div>
                 <h3 className="text-xl font-bold text-white uppercase tracking-tighter">{item.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed px-4">{item.desc}</p>
+                <p className="text-sm text-white leading-relaxed px-4">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -181,9 +181,9 @@ export default function LandingPage() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <h4 className="text-white font-bold">{alert.animal}</h4>
-                        <span className="text-[10px] text-muted-foreground uppercase">{alert.time}</span>
+                        <span className="text-[10px] text-white uppercase">{alert.time}</span>
                       </div>
-                      <p className="text-xs text-white/50">{alert.location}</p>
+                      <p className="text-xs text-white">{alert.location}</p>
                     </div>
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                       <ChevronRight className="w-5 h-5 text-primary" />
@@ -209,7 +209,7 @@ export default function LandingPage() {
                   <div className="z-10">
                     <Map className="w-24 h-24 text-primary/40 mb-4 mx-auto" />
                     <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tighter">Kerala Corridor Index</h3>
-                    <p className="text-sm text-white/50 mb-6">Monitoring 42 active elephant corridors</p>
+                    <p className="text-sm text-white mb-6">Monitoring 42 active elephant corridors</p>
                     <Link href="/map">
                       <Button size="sm" className="bg-primary text-white">Explore Map</Button>
                     </Link>
@@ -238,17 +238,17 @@ export default function LandingPage() {
                   <span className="text-primary italic">FRONTIER</span>
                 </h2>
               </div>
-              <p className="text-lg text-white/70 leading-relaxed mb-8">
+              <p className="text-lg text-white leading-relaxed mb-8">
                 Every year, hundreds of lives are impacted by human-wildlife conflict in the border villages of Kerala. Our mission is to bridge the gap between forest intelligence and community safety using real-time GIS technology.
               </p>
               <div className="grid grid-cols-2 gap-8">
                 <div>
                   <div className="text-3xl font-bold text-primary mb-1">100%</div>
-                  <div className="text-xs text-white/40 uppercase font-bold tracking-widest">Village Coverage</div>
+                  <div className="text-xs text-white uppercase font-bold tracking-widest">Village Coverage</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-primary mb-1">5s</div>
-                  <div className="text-xs text-white/40 uppercase font-bold tracking-widest">Alert Latency</div>
+                  <div className="text-xs text-white uppercase font-bold tracking-widest">Alert Latency</div>
                 </div>
               </div>
             </div>
@@ -285,10 +285,10 @@ export default function LandingPage() {
               Wild Alert
             </span>
           </div>
-          <p className="text-sm text-white/70 mb-8 max-w-md mx-auto">
+          <p className="text-sm text-white mb-8 max-w-md mx-auto">
             A specialized intelligence platform dedicated to the preservation of Kerala's wildlife and the safety of its forest communities.
           </p>
-          <div className="text-xs text-muted-foreground/50">
+          <div className="text-xs text-white">
             © 2026 Wild Alert Platform. Kerala Forest Intelligence Division.
           </div>
         </div>

@@ -60,13 +60,13 @@ export default function CreateCommunityPage() {
     <div className="max-w-6xl mx-auto space-y-8">
       <div className="flex items-center gap-4">
           <Link href="/communities">
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-white">
+            <Button variant="ghost" size="icon" className="text-white hover:text-white">
               <ChevronLeft className="w-6 h-6" />
             </Button>
           </Link>
           <div>
             <h1 className="text-3xl font-black tracking-tighter uppercase">Initialize Community Network</h1>
-            <p className="text-muted-foreground text-sm font-medium">Define geo-fenced boundaries for localized wildlife intelligence.</p>
+            <p className="text-white text-sm font-medium">Define geo-fenced boundaries for localized wildlife intelligence.</p>
           </div>
         </div>
 
@@ -81,7 +81,7 @@ export default function CreateCommunityPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold text-white/50">Community Name</label>
+                  <label className="text-[10px] uppercase font-bold text-white">Community Name</label>
                   <Input 
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -91,7 +91,7 @@ export default function CreateCommunityPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold text-white/50">District</label>
+                  <label className="text-[10px] uppercase font-bold text-white">District</label>
                   <Select onValueChange={(v) => setFormData({...formData, district: v})} required>
                     <SelectTrigger className="bg-white/5 border-white/5 text-white">
                       <SelectValue placeholder="Select district" />
@@ -105,7 +105,7 @@ export default function CreateCommunityPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold text-white/50">Risk Assessment</label>
+                  <label className="text-[10px] uppercase font-bold text-white">Risk Assessment</label>
                   <Select onValueChange={(v: any) => setFormData({...formData, riskLevel: v})} defaultValue={formData.riskLevel}>
                     <SelectTrigger className="bg-white/5 border-white/5 text-white">
                       <SelectValue />
@@ -119,7 +119,7 @@ export default function CreateCommunityPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase font-bold text-white/50">Intelligence Description</label>
+                  <label className="text-[10px] uppercase font-bold text-white">Intelligence Description</label>
                   <Textarea 
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}

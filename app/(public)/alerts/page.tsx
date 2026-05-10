@@ -106,7 +106,7 @@ export default function PublicAlertFeed() {
                             )}>
                               {report.severity} DANGER
                             </Badge>
-                            <div className="flex items-center gap-2 text-muted-foreground text-xs font-medium">
+                            <div className="flex items-center gap-2 text-white text-xs font-medium">
                               <Clock className="w-3 h-3" />
                               12:45 PM
                             </div>
@@ -160,7 +160,7 @@ export default function PublicAlertFeed() {
                 ].map((item, i) => (
                   <div key={i} className="space-y-2">
                     <div className="flex justify-between text-xs">
-                      <span className="text-muted-foreground font-medium">{item.label}</span>
+                      <span className="text-white font-medium">{item.label}</span>
                       <span className={cn(
                         "font-bold",
                         item.score > 80 ? "text-red-500" : item.score > 50 ? "text-amber-500" : "text-primary"

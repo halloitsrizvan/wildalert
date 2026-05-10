@@ -50,7 +50,7 @@ export default function WildlifeMap({
 
   if (!L) return (
     <div className="w-full h-full bg-card flex items-center justify-center border border-white/5 rounded-2xl">
-      <div className="text-muted-foreground animate-pulse">Loading GIS Intelligence...</div>
+      <div className="text-white animate-pulse">Loading GIS Intelligence...</div>
     </div>
   );
 
@@ -91,7 +91,7 @@ export default function WildlifeMap({
               <Popup>
                 <div className="p-2">
                   <h3 className="font-bold text-primary">{community.name}</h3>
-                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">{community.riskLevel} Risk Network</p>
+                  <p className="text-[10px] text-white uppercase font-bold tracking-widest">{community.riskLevel} Risk Network</p>
                 </div>
               </Popup>
             </Polygon>
@@ -105,14 +105,14 @@ export default function WildlifeMap({
               <Popup className="custom-popup">
                 <div className="p-2 min-w-[200px]">
                   <h3 className="font-bold text-lg mb-1">{report.animalType} Sighting</h3>
-                  <p className="text-xs text-muted-foreground mb-2">{report.location.name}</p>
+                  <p className="text-xs text-white mb-2">{report.location.name}</p>
                   <div className="flex items-center gap-2 mb-2">
                     <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${
                       report.severity === 'critical' ? 'bg-red-500/20 text-red-500' : 'bg-amber-500/20 text-amber-500'
                     }`}>
                       {report.severity}
                     </span>
-                    <span className="text-[10px] text-muted-foreground">2 mins ago</span>
+                    <span className="text-[10px] text-white">2 mins ago</span>
                   </div>
                   <p className="text-sm">{report.description}</p>
                 </div>
@@ -162,15 +162,15 @@ export default function WildlifeMap({
       {/* Map Legend */}
       <div className="absolute bottom-6 right-6 z-10 glass-dark p-4 rounded-xl border-white/10 text-xs space-y-2 pointer-events-none">
         <div className="font-bold text-white mb-2 uppercase tracking-widest text-[10px]">Intelligence Legend</div>
-        <div className="flex items-center gap-2 text-muted-foreground">
+        <div className="flex items-center gap-2 text-white">
           <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
           Critical Alert
         </div>
-        <div className="flex items-center gap-2 text-muted-foreground">
+        <div className="flex items-center gap-2 text-white">
           <div className="w-3 h-3 rounded-full bg-amber-500" />
           High Risk Sighting
         </div>
-        <div className="flex items-center gap-2 text-muted-foreground">
+        <div className="flex items-center gap-2 text-white">
           <div className="w-3 h-3 rounded-full bg-blue-500" />
           Ranger Unit
         </div>

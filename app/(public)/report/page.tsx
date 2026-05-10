@@ -80,7 +80,7 @@ export default function ReportPage() {
               </div>
               <div>
                 <CardTitle className="text-3xl font-black text-white tracking-tighter uppercase">Intelligence Submission</CardTitle>
-                <CardDescription className="text-white/50 font-medium">
+                <CardDescription className="text-white font-medium">
                   Direct intelligence line to Kerala Forest Authorities. Immediate response active.
                 </CardDescription>
                 {currentCommunity && (
@@ -116,7 +116,7 @@ export default function ReportPage() {
                           "flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all group",
                           form.watch('animalType') === animal.id 
                             ? "bg-primary/20 border-primary text-white shadow-[0_0_20px_rgba(34,197,94,0.2)]" 
-                            : "bg-white/5 border-white/5 text-white/40 hover:border-white/20 hover:text-white"
+                            : "bg-white/5 border-white/5 text-white hover:border-white/20 hover:text-white"
                         )}
                       >
                         <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">{animal.icon}</span>
@@ -145,7 +145,7 @@ export default function ReportPage() {
                                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-20" />
                                  <MapPin className="w-8 h-8 text-primary/40 group-hover:scale-110 transition-transform" />
                                  <span className="text-[10px] text-white/30 uppercase font-bold">Interactive Map Preview</span>
-                                 <div className="absolute bottom-3 left-3 bg-black/60 px-2 py-1 rounded text-[8px] text-white/50 font-mono border border-white/10">GPS READY: 10.5276, 76.2144</div>
+                                 <div className="absolute bottom-3 left-3 bg-black/60 px-2 py-1 rounded text-[8px] text-white font-mono border border-white/10">GPS READY: 10.5276, 76.2144</div>
                               </div>
                             </div>
                           </FormControl>
@@ -216,7 +216,7 @@ export default function ReportPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="p-8 rounded-3xl border-2 border-dashed border-white/5 bg-white/2 flex flex-col items-center justify-center gap-4 cursor-pointer hover:bg-white/5 transition-all group">
                     <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                      <Camera className="w-8 h-8 text-white/40 group-hover:text-primary transition-colors" />
+                      <Camera className="w-8 h-8 text-white group-hover:text-primary transition-colors" />
                     </div>
                     <div className="text-center">
                       <span className="block text-white font-bold">Attach Intelligence Media</span>

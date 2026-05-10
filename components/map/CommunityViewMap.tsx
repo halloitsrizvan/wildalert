@@ -59,7 +59,7 @@ export default function CommunityViewMap({ polygonData, riskLevel }: CommunityVi
       </MapContainer>
       <div className="absolute bottom-6 left-6 z-10 glass-dark p-4 rounded-xl border border-white/10">
         <div className="text-[10px] uppercase font-black text-white mb-2 tracking-widest">Operational Boundary</div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground font-bold">
+        <div className="flex items-center gap-2 text-xs text-white font-bold">
            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: riskColor }} />
            Active Geo-Fence Unit
         </div>

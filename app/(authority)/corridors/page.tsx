@@ -15,7 +15,7 @@ export default function CorridorIntelligencePage() {
           <Wind className="w-8 h-8 text-primary" />
           Corridor Intelligence
         </h1>
-        <p className="text-muted-foreground">Monitoring animal migration paths and ecological corridors.</p>
+        <p className="text-white">Monitoring animal migration paths and ecological corridors.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -26,20 +26,20 @@ export default function CorridorIntelligencePage() {
               <CardHeader className="p-4 pb-2">
                 <div className="flex justify-between items-start">
                   <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary">Active</Badge>
-                  <span className="text-xs text-muted-foreground">ID: {corridor.id}</span>
+                  <span className="text-xs text-white">ID: {corridor.id}</span>
                 </div>
                 <CardTitle className="text-lg font-bold text-white mt-2 group-hover:text-primary transition-colors">
                   {corridor.name}
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-4 pt-0 space-y-4">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <MapIcon className="w-3 h-3" />
                   {corridor.path.length} waypoints monitored
                 </div>
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground uppercase tracking-widest">Risk Index</span>
+                    <span className="text-white uppercase tracking-widest">Risk Index</span>
                     <span className="text-white font-bold">{corridor.riskIndex}%</span>
                   </div>
                   <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
@@ -69,7 +69,7 @@ export default function CorridorIntelligencePage() {
               <Activity className="w-5 h-5 text-primary" />
               Path Activity Analysis
             </CardTitle>
-            <CardDescription className="text-muted-foreground">Real-time movement heatmaps and sensor data from Wayanad-Nilgiri corridor.</CardDescription>
+            <CardDescription className="text-white">Real-time movement heatmaps and sensor data from Wayanad-Nilgiri corridor.</CardDescription>
           </CardHeader>
           <CardContent className="flex-1 p-0 relative min-h-[400px]">
             {/* Visual Placeholder for Path Intelligence */}
@@ -77,7 +77,7 @@ export default function CorridorIntelligencePage() {
               <div className="w-20 h-20 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
               <div>
                 <h3 className="text-white font-bold text-lg">Generating Path Projection</h3>
-                <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+                <p className="text-white text-sm max-w-xs mx-auto">
                   Processing satellite imagery and acoustic sensor data for movement prediction.
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function CorridorIntelligencePage() {
                 { label: "Zone Health", value: "Optimal" },
               ].map((stat, i) => (
                 <div key={i} className="glass-dark p-3 rounded-lg border-white/5">
-                  <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+                  <div className="text-[10px] text-white uppercase tracking-wider">{stat.label}</div>
                   <div className="text-sm font-bold text-white">{stat.value}</div>
                 </div>
               ))}
@@ -114,7 +114,7 @@ export default function CorridorIntelligencePage() {
               <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5">
                 <div>
                   <div className="text-sm font-bold text-white">{item.title}</div>
-                  <div className="text-xs text-muted-foreground">{item.location}</div>
+                  <div className="text-xs text-white">{item.location}</div>
                 </div>
                 <Badge variant={item.status === 'Critical' ? 'destructive' : 'outline'}>{item.status}</Badge>
               </div>
@@ -127,7 +127,7 @@ export default function CorridorIntelligencePage() {
             <CardTitle className="text-white">Conservation Operations</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">Active conservation projects to restore fragmented corridors.</p>
+            <p className="text-sm text-white">Active conservation projects to restore fragmented corridors.</p>
             <div className="space-y-3">
               <div className="flex justify-between items-center text-xs">
                 <span className="text-white font-medium">Zone 4 Reforestation</span>

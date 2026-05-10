@@ -80,7 +80,7 @@ export default function CommunityDrawMap({ onPolygonCreated, center = [10.8505, 
           />
         </FeatureGroup>
       </MapContainer>
-      <div className="absolute bottom-4 left-4 z-10 glass-dark p-3 rounded-lg border border-white/10 text-[10px] text-white/50 uppercase font-bold">
+      <div className="absolute bottom-4 left-4 z-10 glass-dark p-3 rounded-lg border border-white/10 text-[10px] text-white uppercase font-bold">
         Draw a polygon to define community boundaries
       </div>
     </div>

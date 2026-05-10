@@ -16,7 +16,7 @@ export default function RangersOperationsPage() {
             <Shield className="w-8 h-8 text-primary" />
             Ranger Operations
           </h1>
-          <p className="text-muted-foreground">Coordination and status monitoring of field units across all divisions.</p>
+          <p className="text-white">Coordination and status monitoring of field units across all divisions.</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="border-white/10 bg-card">Deploy Unit</Button>
@@ -26,7 +26,7 @@ export default function RangersOperationsPage() {
 
       <div className="flex gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white" />
           <Input placeholder="Search units by name, rank or sector..." className="bg-card border-white/5 pl-10" />
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function RangersOperationsPage() {
             <CardContent className="pt-8 pb-6 px-6 space-y-4">
               <div>
                 <h3 className="text-lg font-bold text-white">{ranger.name}</h3>
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{ranger.rank}</p>
+                <p className="text-xs text-white font-medium uppercase tracking-wider">{ranger.rank}</p>
               </div>
 
               <div className="flex items-center justify-between py-2 border-y border-white/5">
@@ -51,17 +51,17 @@ export default function RangersOperationsPage() {
                     "w-2 h-2 rounded-full",
                     ranger.status === 'active' || ranger.status === 'on-duty' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" : "bg-muted"
                   )} />
-                  <span className="text-xs text-muted-foreground capitalize">{ranger.status}</span>
+                  <span className="text-xs text-white capitalize">{ranger.status}</span>
                 </div>
                 <Badge variant="outline" className="text-[10px] bg-primary/5">Sector 4A</Badge>
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-3 text-xs text-white">
                   <MapPin className="w-4 h-4 text-primary" />
                   {ranger.location.lat.toFixed(4)}, {ranger.location.lng.toFixed(4)}
                 </div>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-3 text-xs text-white">
                   <Activity className="w-4 h-4 text-primary" />
                   Last heartbeat: 2m ago
                 </div>
@@ -87,7 +87,7 @@ export default function RangersOperationsPage() {
           </div>
           <div className="text-center">
             <h4 className="text-white font-bold">Register New Unit</h4>
-            <p className="text-xs text-muted-foreground">Add field personnel to the platform</p>
+            <p className="text-xs text-white">Add field personnel to the platform</p>
           </div>
         </div>
       </div>

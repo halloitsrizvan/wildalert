@@ -47,11 +47,11 @@ export default function PublicLiveMap() {
                   <Activity className="w-5 h-5 text-red-500" />
                 </div>
                 <div>
-                  <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest leading-none mb-1">State Risk Index</div>
+                  <div className="text-[10px] text-white uppercase font-bold tracking-widest leading-none mb-1">State Risk Index</div>
                   <div className="text-xl font-bold text-white leading-none">HIGH <span className="text-red-500">84%</span></div>
                 </div>
               </div>
-              <Button size="icon" variant="ghost" className="text-muted-foreground hover:text-white">
+              <Button size="icon" variant="ghost" className="text-white hover:text-white">
                 <Info className="w-4 h-4" />
               </Button>
             </CardContent>
@@ -64,7 +64,7 @@ export default function PublicLiveMap() {
                 onClick={() => setActiveTab('alerts')}
                 className={cn(
                   "flex-1 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all",
-                  activeTab === 'alerts' ? "bg-primary text-white" : "text-muted-foreground hover:text-white"
+                  activeTab === 'alerts' ? "bg-primary text-white" : "text-white hover:text-white"
                 )}
               >
                 Live Alerts
@@ -73,7 +73,7 @@ export default function PublicLiveMap() {
                 onClick={() => setActiveTab('info')}
                 className={cn(
                   "flex-1 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all",
-                  activeTab === 'info' ? "bg-primary text-white" : "text-muted-foreground hover:text-white"
+                  activeTab === 'info' ? "bg-primary text-white" : "text-white hover:text-white"
                 )}
               >
                 GIS Info
@@ -95,13 +95,13 @@ export default function PublicLiveMap() {
                       )}>
                         {alert.type.toUpperCase()}
                       </Badge>
-                      <span className="text-[10px] text-muted-foreground uppercase">2m ago</span>
+                      <span className="text-[10px] text-white uppercase">2m ago</span>
                     </div>
                     <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors">{alert.title}</h4>
-                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{alert.message}</p>
+                    <p className="text-xs text-white mt-1 line-clamp-2">{alert.message}</p>
                     <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/5">
                       <MapPin className="w-3 h-3 text-primary" />
-                      <span className="text-[10px] text-muted-foreground">Sector 4, Attappady</span>
+                      <span className="text-[10px] text-white">Sector 4, Attappady</span>
                       <ChevronRight className="w-3 h-3 ml-auto text-primary" />
                     </div>
                   </div>

@@ -17,7 +17,7 @@ export default function AlertsCenterPage() {
             <Bell className="w-8 h-8 text-primary" />
             Emergency Alerts Center
           </h1>
-          <p className="text-muted-foreground">Monitor and broadcast emergency notifications to village nodes.</p>
+          <p className="text-white">Monitor and broadcast emergency notifications to village nodes.</p>
         </div>
         <Button className="bg-destructive hover:bg-destructive/90 text-white h-12 px-6 glow-red">
           <Megaphone className="mr-2 w-5 h-5" />
@@ -28,7 +28,7 @@ export default function AlertsCenterPage() {
       {/* Filter Bar */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white" />
           <Input placeholder="Search alerts by village or type..." className="bg-card border-white/5 pl-10" />
         </div>
         <Button variant="outline" className="border-white/5 bg-card">
@@ -51,14 +51,14 @@ export default function AlertsCenterPage() {
                 )}>
                   {alert.type.toUpperCase()}
                 </Badge>
-                <span className="text-[10px] text-muted-foreground uppercase font-bold">12 mins ago</span>
+                <span className="text-[10px] text-white uppercase font-bold">12 mins ago</span>
               </div>
               <CardTitle className="text-lg font-bold text-white group-hover:text-primary transition-colors">
                 {alert.title}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 {alert.message}
               </p>
               <div className="flex items-center gap-2 pt-4 border-t border-white/5">
@@ -67,7 +67,7 @@ export default function AlertsCenterPage() {
                 </div>
                 <div className="text-xs">
                   <div className="text-white font-medium">Broadcasted to 450 users</div>
-                  <div className="text-muted-foreground">Delivery rate: 98.4%</div>
+                  <div className="text-white">Delivery rate: 98.4%</div>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -85,7 +85,7 @@ export default function AlertsCenterPage() {
           </div>
           <div className="text-center">
             <h4 className="text-white font-bold">New Notification</h4>
-            <p className="text-xs text-muted-foreground">Manually trigger an alert</p>
+            <p className="text-xs text-white">Manually trigger an alert</p>
           </div>
         </div>
       </div>

@@ -47,15 +47,15 @@
   --background: 140 15% 4%;
   --foreground: 0 0% 100%;
   --card: 140 15% 6%;
-  --card-foreground: 140 5% 95%;
+  --card-foreground: 0 0% 100%;
   --popover: 140 15% 6%;
-  --popover-foreground: 140 5% 95%;
+  --popover-foreground: 0 0% 100%;
   --primary: 150 80% 45%;
   --primary-foreground: 150 5% 98%;
   --secondary: 160 30% 12%;
   --secondary-foreground: 160 5% 95%;
   --muted: 140 10% 12%;
-  --muted-foreground: 0 0% 70%;
+  --muted-foreground: 0 0% 90%;
   --accent: 170 60% 45%;
   --accent-foreground: 170 5% 95%;
   --destructive: 0 84% 60%;

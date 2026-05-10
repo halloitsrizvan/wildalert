@@ -26,12 +26,12 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                   WILD<span className="text-primary">ALERT</span>
                 </span>
               </Link>
-              <p className="text-sm text-white/50 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Kerala's first decentralized wildlife emergency intelligence network. Empowering communities through real-time GIS technology.
               </p>
               <div className="flex gap-4">
                 {[Send, MessageSquare, Globe].map((Icon, i) => (
-                  <Link key={i} href="#" className="p-2 rounded-full bg-white/5 text-white/50 hover:text-primary hover:bg-primary/10 transition-all">
+                  <Link key={i} href="#" className="p-2 rounded-full bg-white/5 text-white hover:text-primary hover:bg-primary/10 transition-all">
                     <Icon className="w-4 h-4" />
                   </Link>
                 ))}
@@ -43,7 +43,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <ul className="space-y-3">
                 {["Live Wildlife Map", "Active Alert Feed", "Corridor Analytics", "Ranger Response"].map((item, i) => (
                   <li key={i}>
-                    <Link href="#" className="text-sm text-white/40 hover:text-white transition-colors">{item}</Link>
+                    <Link href="#" className="text-sm text-white hover:text-white transition-colors">{item}</Link>
                   </li>
                 ))}
               </ul>
@@ -54,7 +54,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <ul className="space-y-3">
                 {["Safety Protocols", "Community Guidelines", "API Documentation", "System Status"].map((item, i) => (
                   <li key={i}>
-                    <Link href="#" className="text-sm text-white/40 hover:text-white transition-colors">{item}</Link>
+                    <Link href="#" className="text-sm text-white hover:text-white transition-colors">{item}</Link>
                   </li>
                 ))}
               </ul>
@@ -63,15 +63,15 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <div className="space-y-6">
               <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Command Center</h4>
               <div className="space-y-4">
-                <div className="flex items-center gap-3 text-sm text-white/40">
+                <div className="flex items-center gap-3 text-sm text-white">
                   <MapPin className="w-4 h-4 text-primary" />
                   <span>Attappady Range, Palakkad</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-white/40">
+                <div className="flex items-center gap-3 text-sm text-white">
                   <Phone className="w-4 h-4 text-primary" />
                   <span>+91 1800 425 4733</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-white/40">
+                <div className="flex items-center gap-3 text-sm text-white">
                   <Mail className="w-4 h-4 text-primary" />
                   <span>emergency@wildalert.gov.in</span>
                 </div>

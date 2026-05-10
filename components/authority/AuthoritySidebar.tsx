@@ -58,7 +58,7 @@ export function AuthoritySidebar() {
                 "flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group",
                 isActive 
                   ? "bg-primary/10 text-primary border border-primary/20" 
-                  : "text-white/50 hover:text-white hover:bg-white/5"
+                  : "text-white hover:text-white hover:bg-white/5"
               )}
             >
               <div className="flex items-center gap-3">

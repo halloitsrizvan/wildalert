@@ -42,7 +42,7 @@ export function PublicNavbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-white/70 hover:text-white transition-colors flex items-center gap-2"
+              className="text-sm font-medium text-white hover:text-white transition-colors flex items-center gap-2"
             >
               <item.icon className="w-4 h-4" />
               {item.name}

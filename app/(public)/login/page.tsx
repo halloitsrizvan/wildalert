@@ -51,7 +51,7 @@ export default function LoginPage() {
             onClick={() => setMode('login')}
             className={cn(
               "px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all",
-              mode === 'login' ? "bg-primary text-white" : "text-white/50 hover:text-white"
+              mode === 'login' ? "bg-primary text-white" : "text-white hover:text-white"
             )}
           >
             Access System
@@ -60,7 +60,7 @@ export default function LoginPage() {
             onClick={() => setMode('signup')}
             className={cn(
               "px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all",
-              mode === 'signup' ? "bg-primary text-white" : "text-white/50 hover:text-white"
+              mode === 'signup' ? "bg-primary text-white" : "text-white hover:text-white"
             )}
           >
             Join Network
@@ -87,7 +87,7 @@ export default function LoginPage() {
             <CardTitle className="text-3xl font-black uppercase tracking-tighter text-white">
               {mode === 'login' ? "Authority Login" : "Establish Node"}
             </CardTitle>
-            <CardDescription className="text-white/50">
+            <CardDescription className="text-white">
               {mode === 'login' 
                 ? "Secure access for forest range officers and community authorities." 
                 : "Initialize a new geo-fenced intelligence network for your sector."}
@@ -96,7 +96,7 @@ export default function LoginPage() {
           <CardContent className="p-8 pt-0">
              <ul className="space-y-3 mb-8">
                 {["Regional GIS Control", "Boundary Calibration", "Emergency Dispatch"].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-xs text-white/70">
+                  <li key={i} className="flex items-center gap-3 text-xs text-white">
                     <div className="w-1 h-1 rounded-full bg-primary" />
                     {item}
                   </li>
@@ -133,7 +133,7 @@ export default function LoginPage() {
             <CardTitle className="text-3xl font-black uppercase tracking-tighter text-white">
               {mode === 'login' ? "Citizen Access" : "Join Community"}
             </CardTitle>
-            <CardDescription className="text-white/50">
+            <CardDescription className="text-white">
               {mode === 'login'
                 ? "Access localized wildlife intelligence for your connected zone."
                 : "Register to receive localized safety alerts and report sightings."}
@@ -153,7 +153,7 @@ export default function LoginPage() {
                ) : (
                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 mb-8">
                    <div className="text-[10px] text-red-500 uppercase font-black tracking-[0.2em]">Disconnected</div>
-                   <div className="text-xs text-white/50">Move to a protected zone to access localized feed.</div>
+                   <div className="text-xs text-white">Move to a protected zone to access localized feed.</div>
                  </div>
                )
              )}
@@ -196,7 +196,7 @@ function CommunitySignupFlow({ onBack }: { onBack: () => void }) {
                 <ArrowRight className="w-4 h-4 rotate-180" /> Back
               </button>
               <h2 className="text-2xl font-black text-white uppercase tracking-tighter leading-none mb-4">Establish Intelligence Node</h2>
-              <p className="text-white/40 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Define your geographical sector to start broadcasting localized wildlife alerts.
               </p>
             </div>
@@ -237,7 +237,7 @@ function CommunitySignupFlow({ onBack }: { onBack: () => void }) {
               <div className="flex-1 flex flex-col h-full">
                  <div className="mb-4">
                    <h3 className="text-sm font-bold text-white uppercase">Calibrate Operational Zone</h3>
-                   <p className="text-[10px] text-white/40">Select your center point and define the safety radius.</p>
+                   <p className="text-[10px] text-white">Select your center point and define the safety radius.</p>
                  </div>
                  <div className="flex-1 bg-zinc-900 rounded-2xl overflow-hidden border border-white/5 mb-6">
                     <CommunitySignupMap onCircleSet={setCircleData} />

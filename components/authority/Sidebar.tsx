@@ -54,7 +54,7 @@ export function Sidebar() {
           variant="ghost" 
           size="icon" 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-muted-foreground hover:text-white"
+          className="text-white hover:text-white"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </Button>
@@ -72,7 +72,7 @@ export function Sidebar() {
                 "flex items-center gap-3 px-3 py-3 rounded-lg transition-all group",
                 isActive 
                   ? "bg-primary/20 text-primary border border-primary/20" 
-                  : "text-muted-foreground hover:text-white hover:bg-white/5"
+                  : "text-white hover:text-white hover:bg-white/5"
               )}
             >
               <item.icon className={cn("w-5 h-5", isActive ? "text-primary" : "group-hover:text-white")} />
@@ -89,7 +89,7 @@ export function Sidebar() {
       <div className="p-4 border-t border-white/5 space-y-1">
         <Link
           href="/settings"
-          className="flex items-center gap-3 px-3 py-3 rounded-lg text-muted-foreground hover:text-white hover:bg-white/5"
+          className="flex items-center gap-3 px-3 py-3 rounded-lg text-white hover:text-white hover:bg-white/5"
         >
           <Settings className="w-5 h-5" />
           {!isCollapsed && <span className="font-medium">Settings</span>}

@@ -34,7 +34,7 @@ export default function CommunitiesPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h1 className="text-4xl font-black tracking-tighter uppercase">Community Intelligence Networks</h1>
-            <p className="text-muted-foreground font-medium">Managing decentralized geo-fenced safety zones across Kerala.</p>
+            <p className="text-white font-medium">Managing decentralized geo-fenced safety zones across Kerala.</p>
           </div>
           <Link href="/communities/create">
             <Button className="bg-primary hover:bg-primary/90 text-white font-bold h-12 px-8 glow-green uppercase tracking-widest text-xs">
@@ -53,7 +53,7 @@ export default function CommunitiesPage() {
             { label: "Avg Response Time", value: "4.2m", icon: Activity },
           ].map((stat, i) => (
             <div key={i} className="glass-dark p-4 rounded-xl border-white/5 space-y-1">
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-white">
                 <stat.icon className="w-3 h-3" />
                 <span className="text-[10px] font-bold uppercase tracking-widest">{stat.label}</span>
               </div>
@@ -72,10 +72,10 @@ export default function CommunitiesPage() {
           <Card className="bg-card border-white/5 py-12 text-center border-dashed">
             <CardContent className="space-y-4">
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto">
-                <MapIcon className="w-8 h-8 text-muted-foreground" />
+                <MapIcon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white">No Active Networks</h3>
-              <p className="text-muted-foreground text-sm max-w-sm mx-auto">
+              <p className="text-white text-sm max-w-sm mx-auto">
                 Start by establishing the first community boundary to activate geo-fenced intelligence.
               </p>
               <Link href="/communities/create">
@@ -98,8 +98,8 @@ export default function CommunitiesPage() {
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-primary">{community.district}</span>
                       <div className="flex items-center gap-2">
-                        <Users className="w-3 h-3 text-muted-foreground" />
-                        <span className="text-[10px] text-muted-foreground font-bold">{community.memberCount} Members</span>
+                        <Users className="w-3 h-3 text-white" />
+                        <span className="text-[10px] text-white font-bold">{community.memberCount} Members</span>
                       </div>
                     </div>
                     <CardTitle className="text-xl font-black tracking-tight text-white group-hover:text-primary transition-colors">
@@ -112,7 +112,7 @@ export default function CommunitiesPage() {
                   <CardContent className="space-y-6">
                     <div className="flex items-center justify-between pt-4 border-t border-white/5">
                       <div className="space-y-1">
-                        <div className="text-[10px] uppercase font-bold text-white/40">Risk Level</div>
+                        <div className="text-[10px] uppercase font-bold text-white">Risk Level</div>
                         <div className={cn(
                           "text-xs font-black uppercase",
                           community.riskLevel === 'critical' ? "text-red-500" : 
@@ -120,7 +120,7 @@ export default function CommunitiesPage() {
                         )}>{community.riskLevel}</div>
                       </div>
                       <div className="space-y-1 text-right">
-                        <div className="text-[10px] uppercase font-bold text-white/40">Active Alerts</div>
+                        <div className="text-[10px] uppercase font-bold text-white">Active Alerts</div>
                         <div className="text-xs font-black text-white">{community.activeAlerts} Reports</div>
                       </div>
                     </div>

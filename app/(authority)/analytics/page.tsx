@@ -44,7 +44,7 @@ export default function AnalyticsPage() {
             <BarChart3 className="w-8 h-8 text-primary" />
             Wildlife Intelligence Analytics
           </h1>
-          <p className="text-muted-foreground">Statistical patterns and predictive modeling for wildlife movement.</p>
+          <p className="text-white">Statistical patterns and predictive modeling for wildlife movement.</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@ export default function AnalyticsPage() {
               <TrendingUp className="w-5 h-5 text-primary" />
               Monthly Sighting Trends
             </CardTitle>
-            <CardDescription className="text-muted-foreground">Analysis of wildlife sightings across primary forest sectors.</CardDescription>
+            <CardDescription className="text-white">Analysis of wildlife sightings across primary forest sectors.</CardDescription>
           </CardHeader>
           <CardContent className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -105,7 +105,7 @@ export default function AnalyticsPage() {
               <Activity className="w-5 h-5 text-primary" />
               Animal Species Distribution
             </CardTitle>
-            <CardDescription className="text-muted-foreground">Percentage share of primary wildlife in monitoring zones.</CardDescription>
+            <CardDescription className="text-white">Percentage share of primary wildlife in monitoring zones.</CardDescription>
           </CardHeader>
           <CardContent className="h-[300px] flex items-center justify-center">
             <ResponsiveContainer width="100%" height="100%">
@@ -130,7 +130,7 @@ export default function AnalyticsPage() {
             </ResponsiveContainer>
             <div className="absolute flex flex-col items-center justify-center">
               <span className="text-3xl font-black text-white">1,070</span>
-              <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Total Monitored</span>
+              <span className="text-[10px] text-white uppercase tracking-widest">Total Monitored</span>
             </div>
           </CardContent>
         </Card>

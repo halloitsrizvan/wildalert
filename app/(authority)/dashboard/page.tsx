@@ -12,7 +12,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Command Center</h1>
-        <p className="text-muted-foreground">Real-time wildlife intelligence and operational status.</p>
+        <p className="text-white">Real-time wildlife intelligence and operational status.</p>
       </div>
 
       {/* KPI Stats */}
@@ -58,18 +58,18 @@ export default function AdminDashboard() {
             <Table>
               <TableHeader>
                 <TableRow className="border-white/5 hover:bg-transparent">
-                  <TableHead className="text-muted-foreground uppercase text-xs">Animal</TableHead>
-                  <TableHead className="text-muted-foreground uppercase text-xs">Location</TableHead>
-                  <TableHead className="text-muted-foreground uppercase text-xs">Severity</TableHead>
-                  <TableHead className="text-muted-foreground uppercase text-xs">Status</TableHead>
-                  <TableHead className="text-muted-foreground uppercase text-xs">Time</TableHead>
+                  <TableHead className="text-white uppercase text-xs">Animal</TableHead>
+                  <TableHead className="text-white uppercase text-xs">Location</TableHead>
+                  <TableHead className="text-white uppercase text-xs">Severity</TableHead>
+                  <TableHead className="text-white uppercase text-xs">Status</TableHead>
+                  <TableHead className="text-white uppercase text-xs">Time</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {MOCK_REPORTS.map((report) => (
                   <TableRow key={report.id} className="border-white/5 hover:bg-white/5 transition-colors">
                     <TableCell className="font-medium text-white">{report.animalType}</TableCell>
-                    <TableCell className="text-muted-foreground">{report.location.name}</TableCell>
+                    <TableCell className="text-white">{report.location.name}</TableCell>
                     <TableCell>
                       <Badge variant={report.severity === 'critical' ? 'destructive' : 'outline'} className={cn(
                         report.severity === 'high' ? 'border-amber-500 text-amber-500' : 
@@ -85,10 +85,10 @@ export default function AdminDashboard() {
                           report.status === 'verified' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" : 
                           report.status === 'pending' ? "bg-amber-500 animate-pulse" : "bg-blue-500"
                         )} />
-                        <span className="text-xs capitalize text-muted-foreground">{report.status}</span>
+                        <span className="text-xs capitalize text-white">{report.status}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground text-xs">
+                    <TableCell className="text-white text-xs">
                       2 mins ago
                     </TableCell>
                   </TableRow>
@@ -116,10 +116,10 @@ export default function AdminDashboard() {
                   )}>
                     {alert.type}
                   </span>
-                  <span className="text-[10px] text-muted-foreground">14:20 PM</span>
+                  <span className="text-[10px] text-white">14:20 PM</span>
                 </div>
                 <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors">{alert.title}</h4>
-                <p className="text-xs text-muted-foreground line-clamp-2">{alert.message}</p>
+                <p className="text-xs text-white line-clamp-2">{alert.message}</p>
               </div>
             ))}
             <button className="w-full py-2 text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-widest">

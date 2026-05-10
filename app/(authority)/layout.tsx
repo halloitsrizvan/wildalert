@@ -52,9 +52,9 @@ export default function AuthorityLayout({ children }: { children: React.ReactNod
            <div className="flex items-center gap-6">
               <div className="flex items-center gap-3 pr-6 border-r border-white/5">
                  <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
-                 <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">GIS Engine Active</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-white">GIS Engine Active</span>
               </div>
-              <button className="relative p-2 text-white/50 hover:text-white transition-colors">
+              <button className="relative p-2 text-white hover:text-white transition-colors">
                  <Bell className="w-5 h-5" />
                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full border-2 border-black" />
               </button>

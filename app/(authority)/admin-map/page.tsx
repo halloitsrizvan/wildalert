@@ -16,7 +16,7 @@ export default function LiveMapPage() {
             <MapPin className="w-8 h-8 text-primary" />
             Live Wildlife Intelligence
           </h1>
-          <p className="text-muted-foreground">Interactive GIS monitoring for Kerala Forest Divisions.</p>
+          <p className="text-white">Interactive GIS monitoring for Kerala Forest Divisions.</p>
         </div>
         <div className="flex gap-2">
           <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary px-3 py-1">
@@ -54,7 +54,7 @@ export default function LiveMapPage() {
                   </div>
                   <div>
                     <div className="text-sm font-bold text-white">{ranger.name}</div>
-                    <div className="text-xs text-muted-foreground">{ranger.rank} • Active</div>
+                    <div className="text-xs text-white">{ranger.rank} • Active</div>
                   </div>
                   <div className="ml-auto w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
                 </div>
@@ -74,7 +74,7 @@ export default function LiveMapPage() {
               ].map((zone, i) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground">{zone.label}</span>
+                    <span className="text-white">{zone.label}</span>
                     <span className="text-white font-bold">{zone.value}% Risk</span>
                   </div>
                   <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
