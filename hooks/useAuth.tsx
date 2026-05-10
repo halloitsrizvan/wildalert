@@ -1,54 +1,89 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { auth, db } from "@/lib/firebase";
+import { 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut,
+  User as FirebaseUser 
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+
 export type UserRole = 'user' | 'community_authority';
 
-interface User {
-  id: string;
+interface UserProfile {
+  uid: string;
   name: string;
+  email: string;
   role: UserRole;
   communityId?: string;
+  createdAt: number;
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: UserProfile | null;
   loading: boolean;
-  login: (role: UserRole, communityId?: string, name?: string) => void;
-  logout: () => void;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, role: UserRole, extraData?: any) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("wildalert_user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+      if (fbUser) {
+        // Get user profile from Firestore
+        const docRef = doc(db, "users", fbUser.uid);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          setUser(docSnap.data() as UserProfile);
+        } else {
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const login = (role: UserRole, communityId?: string, name?: string) => {
-    const newUser: User = {
-      id: Math.random().toString(36).substr(2, 9),
-      name: name || (role === 'community_authority' ? "Authority User" : "Community User"),
-      role,
-      communityId
-    };
-    setUser(newUser);
-    localStorage.setItem("wildalert_user", JSON.stringify(newUser));
+  const signIn = async (email: string, password: string) => {
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("wildalert_user");
+  const signUp = async (email: string, password: string, role: UserRole, extraData: any = {}) => {
+    const { user: fbUser } = await createUserWithEmailAndPassword(auth, email, password);
+    
+    const profile: UserProfile = {
+      uid: fbUser.uid,
+      email: fbUser.email!,
+      name: extraData.name || (role === 'community_authority' ? "Authority User" : "Community User"),
+      role,
+      communityId: extraData.communityId || null,
+      createdAt: Date.now(),
+      ...extraData
+    };
+
+    await setDoc(doc(db, "users", fbUser.uid), profile);
+    setUser(profile);
+  };
+
+  const logout = async () => {
+    await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, logout }}>
       {children}
     </AuthContext.Provider>
   );

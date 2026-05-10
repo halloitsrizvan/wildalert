@@ -18,7 +18,7 @@ interface CommunitySignupMapProps {
   onCircleSet: (data: { center: [number, number]; radius: number }) => void;
 }
 
-function MapInteraction({ onCircleSet }: CommunitySignupMapProps) {
+function MapInteraction({ onCircleSet, userLocation }: CommunitySignupMapProps & { userLocation: [number, number] | null }) {
   const [center, setCenter] = useState<[number, number] | null>(null);
   const [radiusPoint, setRadiusPoint] = useState<[number, number] | null>(null);
   const [radius, setRadius] = useState(0);
@@ -46,6 +46,13 @@ function MapInteraction({ onCircleSet }: CommunitySignupMapProps) {
     },
   });
 
+  // Re-center map when user location is found
+  useEffect(() => {
+    if (userLocation) {
+      map.setView(userLocation, 13);
+    }
+  }, [userLocation, map]);
+
   return (
     <>
       {center && <Marker position={center} />}
@@ -58,7 +65,8 @@ function MapInteraction({ onCircleSet }: CommunitySignupMapProps) {
             color: '#22c55e', 
             fillColor: '#22c55e', 
             fillOpacity: 0.2,
-            dashArray: '5, 10' 
+            dashArray: '5, 10',
+            weight: 3
           }} 
         />
       )}
@@ -67,10 +75,42 @@ function MapInteraction({ onCircleSet }: CommunitySignupMapProps) {
 }
 
 export default function CommunitySignupMap({ onCircleSet }: CommunitySignupMapProps) {
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          let message = "Unknown Geolocation Error";
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              message = "User denied Geolocation access.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              message = "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              message = "The request to get user location timed out.";
+              break;
+          }
+          console.warn(`[GIS] ${message}`, error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+  }, []);
+
   return (
     <MapContainer
-      center={[10.8505, 76.2711]} // Kerala center
-      zoom={7}
+      center={userLocation || [10.8505, 76.2711]} // Use location or Kerala center
+      zoom={userLocation ? 13 : 7}
       style={{ height: "100%", width: "100%" }}
       className="z-0"
     >
@@ -78,7 +118,7 @@ export default function CommunitySignupMap({ onCircleSet }: CommunitySignupMapPr
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
-      <MapInteraction onCircleSet={onCircleSet} />
+      <MapInteraction onCircleSet={onCircleSet} userLocation={userLocation} />
     </MapContainer>
   );
 }

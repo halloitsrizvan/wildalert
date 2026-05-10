@@ -15,13 +15,11 @@ const Circle = dynamic(() => import("react-leaflet").then(mod => mod.Circle), { 
 const Polyline = dynamic(() => import("react-leaflet").then(mod => mod.Polyline), { ssr: false });
 const Polygon = dynamic(() => import("react-leaflet").then(mod => mod.Polygon), { ssr: false });
 
-interface WildlifeMapProps {
-  reports?: WildlifeReport[];
-  villages?: Village[];
-  rangers?: Ranger[];
-  center?: [number, number];
-  zoom?: number;
-}
+const MapViewHandler = ({ center, zoom }: { center: [number, number], zoom: number }) => {
+  const map = dynamic(() => import("react-leaflet").then(mod => mod.useMap()), { ssr: false }) as any;
+  // Note: we'll use a simpler approach within the component for better SSR compatibility
+  return null;
+};
 
 export default function WildlifeMap({
   reports = [],
@@ -50,9 +48,19 @@ export default function WildlifeMap({
 
   if (!L) return (
     <div className="w-full h-full bg-card flex items-center justify-center border border-white/5 rounded-2xl">
-      <div className="text-white animate-pulse">Loading GIS Intelligence...</div>
+      <div className="text-white animate-pulse uppercase font-black tracking-widest text-[10px]">Loading GIS Intelligence...</div>
     </div>
   );
+
+  // Helper component to handle map re-centering
+  const MapRecenter = () => {
+    const { useMap } = require("react-leaflet");
+    const map = useMap();
+    useEffect(() => {
+      map.setView(center, zoom);
+    }, [center, zoom]);
+    return null;
+  };
 
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden border border-white/5 shadow-2xl relative">
@@ -62,6 +70,7 @@ export default function WildlifeMap({
         className="w-full h-full z-0"
         scrollWheelZoom={true}
       >
+        <MapRecenter />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"

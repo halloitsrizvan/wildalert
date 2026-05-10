@@ -16,6 +16,9 @@ export default function PublicLiveMap() {
   const [activeTab, setActiveTab] = useState<'alerts' | 'info'>('alerts');
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const [mapCenter, setMapCenter] = useState<[number, number]>([10.5276, 76.2144]);
+  const [mapZoom, setMapZoom] = useState(12);
+  const [locating, setLocating] = useState(true);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -23,7 +26,27 @@ export default function PublicLiveMap() {
     }
   }, [user, authLoading, router]);
 
-  if (authLoading || !user) return <div className="h-screen bg-black flex items-center justify-center text-primary uppercase font-bold animate-pulse">Syncing GIS Stream...</div>;
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setMapCenter([position.coords.latitude, position.coords.longitude]);
+          setLocating(false);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setLocating(false);
+        }
+      );
+    } else {
+      setLocating(false);
+    }
+  }, []);
+
+  if (authLoading || !user) return <div className="h-screen bg-black flex flex-col items-center justify-center text-primary uppercase font-black tracking-[0.4em] animate-pulse">
+    <Shield className="w-12 h-12 mb-4" />
+    Syncing GIS Stream...
+  </div>;
 
   return (
     <div className="h-screen flex flex-col bg-black overflow-hidden -mt-16">
@@ -33,7 +56,8 @@ export default function PublicLiveMap() {
           <WildlifeMap 
             reports={MOCK_REPORTS} 
             villages={MOCK_VILLAGES} 
-            zoom={9}
+            center={mapCenter}
+            zoom={mapZoom}
           />
         </div>
 
