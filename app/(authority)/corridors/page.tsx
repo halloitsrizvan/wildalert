@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { Wind, Map as MapIcon, Activity, AlertTriangle, ChevronRight } from "lucide-react";
 import { MOCK_CORRIDORS } from "@/data/mockData";
 import { cn } from "@/lib/utils";

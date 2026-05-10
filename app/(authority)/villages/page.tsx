@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Activity, Users, Home, AlertTriangle, ShieldCheck } from "lucide-react";
 import { MOCK_VILLAGES } from "@/data/mockData";

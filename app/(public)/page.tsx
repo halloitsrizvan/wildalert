@@ -50,7 +50,7 @@ export default function LandingPage() {
     };
 
     const unsubAlerts = onSnapshot(alertsQuery, (snapshot) => {
-      currentAlerts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'alert' } as Alert));
+      currentAlerts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'alert' } as any));
       updateFeed();
     });
 

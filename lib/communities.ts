@@ -73,7 +73,7 @@ export async function findCommunityByPoint(lat: number, lng: number): Promise<Co
 /**
  * Assigns a user to a community
  */
-export async function assignUserToCommunity(userId: string, communityId: string, lat: number, lng: number, role: UserRole = "citizen") {
+export async function assignUserToCommunity(userId: string, communityId: string, lat: number, lng: number, role: UserRole = "user") {
   const memberRef = doc(db, MEMBERS_COLLECTION, userId);
   
   const memberData: CommunityMember = {

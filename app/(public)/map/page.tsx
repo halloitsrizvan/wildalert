@@ -3,7 +3,7 @@
 import WildlifeMap from "@/components/map/WildlifeMap";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, MapPin, Activity, ChevronRight, Filter, Shield, Info, Radio } from "lucide-react";
+import { AlertTriangle, MapPin, Activity, ChevronRight, Filter, Shield, Info, Radio, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -175,14 +175,16 @@ export default function PublicLiveMap() {
                             <MapPin className="w-3 h-3 text-red-500" />
                             <span className="text-[10px] text-white/60 font-bold uppercase tracking-widest">Sector 4 Node</span>
                           </div>
-                          <a 
-                            href={`https://www.google.com/maps?q=${alert.location.lat},${alert.location.lng}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="ml-auto text-[9px] font-black uppercase text-red-500 hover:text-red-400 flex items-center gap-1"
-                          >
-                            NAVIGATE <ChevronRight className="w-3 h-3" />
-                          </a>
+                                {alert.location && (
+                                  <a 
+                                    href={`https://www.google.com/maps?q=${alert.location.lat},${alert.location.lng}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="ml-auto text-[9px] font-black uppercase text-red-500 hover:text-red-400 flex items-center gap-1"
+                                  >
+                                    Navigate <ExternalLink className="w-2.5 h-2.5" />
+                                  </a>
+                                )}
                         </div>
                       </div>
                     ))}

@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCommunity } from "@/hooks/useCommunity";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Users, Mail, Lock, User, ArrowRight, MapPin, ChevronDown } from "lucide-react";
+import { Shield, Users, Mail, Lock, User, ArrowRight, MapPin, ChevronDown, Phone } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [selectedCommunityId, setSelectedCommunityId] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [communities, setCommunities] = useState<Community[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

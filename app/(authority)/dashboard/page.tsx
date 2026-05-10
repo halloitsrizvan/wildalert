@@ -86,7 +86,13 @@ export default function AdminDashboard() {
   };
 
   const handleStatusUpdate = async (reportId: string, currentStatus: string) => {
-    const nextStatus = currentStatus === 'pending' ? 'verified' : currentStatus === 'verified' ? 'resolved' : 'pending';
+    const statusCycle: Record<string, string> = {
+      'pending': 'verified',
+      'verified': 'responding',
+      'responding': 'resolved',
+      'resolved': 'pending'
+    };
+    const nextStatus = statusCycle[currentStatus] || 'pending';
     try {
       await updateDoc(doc(db, "reports", reportId), {
         status: nextStatus

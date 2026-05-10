@@ -7,7 +7,7 @@ export interface WildlifeReport {
     name: string;
   };
   severity: 'low' | 'medium' | 'high' | 'critical';
-  status: 'pending' | 'verified' | 'resolved';
+  status: 'pending' | 'verified' | 'responding' | 'resolved';
   reportedBy: string;
   timestamp: any;
   description?: string;

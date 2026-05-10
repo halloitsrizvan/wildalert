@@ -12,7 +12,6 @@ import Link from "next/link";
 import CommunityDrawMap from "@/components/map/CommunityDrawMap";
 import { createCommunity } from "@/lib/communities";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner"; // Assuming sonner or similar is used, I'll use standard alert if not
 
 export default function CreateCommunityPage() {
   const router = useRouter();
@@ -92,7 +91,7 @@ export default function CreateCommunityPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] uppercase font-bold text-white">District</label>
-                  <Select onValueChange={(v) => setFormData({...formData, district: v})} required>
+                  <Select onValueChange={(v: string | null) => v && setFormData({...formData, district: v})} required>
                     <SelectTrigger className="bg-white/5 border-white/5 text-white">
                       <SelectValue placeholder="Select district" />
                     </SelectTrigger>
@@ -106,7 +105,7 @@ export default function CreateCommunityPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] uppercase font-bold text-white">Risk Assessment</label>
-                  <Select onValueChange={(v: any) => setFormData({...formData, riskLevel: v})} defaultValue={formData.riskLevel}>
+                  <Select onValueChange={(v: string | null) => v && setFormData({...formData, riskLevel: v as any})} defaultValue={formData.riskLevel}>
                     <SelectTrigger className="bg-white/5 border-white/5 text-white">
                       <SelectValue />
                     </SelectTrigger>
@@ -172,7 +171,6 @@ export default function CreateCommunityPage() {
           </div>
         </form>
       </div>
-    </div>
   );
 }
 
