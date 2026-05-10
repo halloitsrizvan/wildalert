@@ -3,7 +3,8 @@
 import { useEffect, useState, Fragment } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { WildlifeReport, Village, Ranger } from "@/types";
+import { WildlifeReport, Village, Ranger, Community } from "@/types";
+import { getCommunities } from "@/lib/communities";
 
 // Dynamic import for Leaflet components to avoid SSR issues
 const MapContainer = dynamic(() => import("react-leaflet").then(mod => mod.MapContainer), { ssr: false });
@@ -12,6 +13,7 @@ const Marker = dynamic(() => import("react-leaflet").then(mod => mod.Marker), { 
 const Popup = dynamic(() => import("react-leaflet").then(mod => mod.Popup), { ssr: false });
 const Circle = dynamic(() => import("react-leaflet").then(mod => mod.Circle), { ssr: false });
 const Polyline = dynamic(() => import("react-leaflet").then(mod => mod.Polyline), { ssr: false });
+const Polygon = dynamic(() => import("react-leaflet").then(mod => mod.Polygon), { ssr: false });
 
 interface WildlifeMapProps {
   reports?: WildlifeReport[];
@@ -64,6 +66,37 @@ export default function WildlifeMap({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
+
+        {/* Community Boundaries */}
+        {communities.map((community) => {
+          if (!community.polygonCoordinates) return null;
+          const leafletCoordinates = community.polygonCoordinates.coordinates[0].map((coord: [number, number]) => [coord[1], coord[0]]);
+          const riskColor = 
+            community.riskLevel === 'critical' ? "#ef4444" : 
+            community.riskLevel === 'high' ? "#f59e0b" : 
+            community.riskLevel === 'medium' ? "#3b82f6" : "#22c55e";
+
+          return (
+            <Polygon
+              key={community.id}
+              positions={leafletCoordinates}
+              pathOptions={{
+                color: riskColor,
+                fillColor: riskColor,
+                fillOpacity: 0.15,
+                weight: 2,
+                dashArray: '3, 6'
+              }}
+            >
+              <Popup>
+                <div className="p-2">
+                  <h3 className="font-bold text-primary">{community.name}</h3>
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">{community.riskLevel} Risk Network</p>
+                </div>
+              </Popup>
+            </Polygon>
+          );
+        })}
 
         {/* Wildlife Reports Markers */}
         {reports.map((report) => (

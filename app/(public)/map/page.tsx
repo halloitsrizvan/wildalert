@@ -8,10 +8,22 @@ import { AlertTriangle, MapPin, Activity, ChevronRight, Filter, Shield, Info } f
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function PublicLiveMap() {
   const [activeTab, setActiveTab] = useState<'alerts' | 'info'>('alerts');
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, authLoading, router]);
+
+  if (authLoading || !user) return <div className="h-screen bg-black flex items-center justify-center text-primary uppercase font-bold animate-pulse">Syncing GIS Stream...</div>;
 
   return (
     <div className="h-screen flex flex-col bg-black overflow-hidden">

@@ -8,14 +8,37 @@ import { AlertTriangle, Clock, MapPin, Shield, ChevronRight, Activity, Filter, B
 import { Navbar } from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useCommunity } from "@/hooks/useCommunity";
 
 export default function PublicAlertFeed() {
+  const { currentCommunity, loading: geoLoading } = useCommunity();
+
   return (
     <div className="min-h-screen bg-black flex flex-col">
       <Navbar />
+
+      {/* Community Detection Banner */}
+      {!geoLoading && currentCommunity && (
+        <div className="pt-20 bg-primary/20 border-b border-primary/20">
+          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                Protected Zone Detected: {currentCommunity.name}
+              </span>
+            </div>
+            <Link href={`/communities/${currentCommunity.id}`}>
+              <Button variant="ghost" size="sm" className="text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/10">
+                Network Intelligence <ChevronRight className="w-3 h-3 ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )}
       
       {/* Emergency Banner Section */}
-      <section className="pt-24 pb-8 bg-gradient-to-b from-red-500/10 to-transparent">
+      <section className={cn("pb-8 bg-gradient-to-b from-red-500/10 to-transparent", currentCommunity ? "pt-8" : "pt-24")}>
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

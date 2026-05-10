@@ -5,15 +5,17 @@ import { Shield, Map, Activity, BarChart3, AlertTriangle, Menu } from "lucide-re
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { name: "Live Map", href: "/map", icon: Map },
   { name: "Alert Feed", href: "/alerts", icon: Activity },
-  { name: "Intelligence", href: "/#features", icon: Shield },
+  { name: "Communities", href: "/communities", icon: Shield },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/50 backdrop-blur-xl">
@@ -39,12 +41,27 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
-          <Button nativeButton={false} variant="outline" render={<Link href="/login" />} className="border-primary/50 hover:bg-primary/10 text-primary">
-            Admin Login
-          </Button>
-          <Button nativeButton={false} render={<Link href="/report" />} className="bg-primary hover:bg-primary/90 text-white glow-green">
-            Report Sighting
-          </Button>
+          
+          {user ? (
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-end">
+                <span className="text-[10px] font-black uppercase text-primary tracking-widest">{user.role.replace('_', ' ')}</span>
+                <span className="text-xs font-bold text-white">ID: {user.id.slice(0, 5)}</span>
+              </div>
+              <Button size="sm" variant="outline" onClick={logout} className="border-white/10 hover:bg-white/5 text-white">
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Button nativeButton={false} variant="outline" render={<Link href="/login" />} className="border-primary/50 hover:bg-primary/10 text-primary">
+                Network Entry
+              </Button>
+              <Button nativeButton={false} render={<Link href="/login" />} className="bg-primary hover:bg-primary/90 text-white glow-green">
+                Join System
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Mobile Nav */}

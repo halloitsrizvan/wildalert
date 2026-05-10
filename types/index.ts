@@ -33,9 +33,47 @@ export interface Alert {
   type: 'danger' | 'warning' | 'info';
   timestamp: any;
   villageId?: string;
+  communityId?: string;
   location?: {
     lat: number;
     lng: number;
+  };
+}
+
+export type UserRole = 'citizen' | 'ranger' | 'community_admin' | 'forest_officer';
+
+export interface Community {
+  id: string;
+  name: string;
+  district: string;
+  description: string;
+  polygonCoordinates: any; // GeoJSON Polygon
+  createdBy: string;
+  createdAt: any;
+  admins: string[];
+  memberCount: number;
+  riskLevel: 'low' | 'medium' | 'high' | 'critical';
+  activeAlerts: number;
+  villages: string[];
+  notificationSettings: {
+    sms: boolean;
+    push: boolean;
+    emergencyOnly: boolean;
+  };
+}
+
+export interface CommunityMember {
+  userId: string;
+  communityId: string;
+  joinedAt: any;
+  location: {
+    lat: number;
+    lng: number;
+  };
+  role: UserRole;
+  alertPreferences: {
+    radius: number; // km
+    animalTypes: string[];
   };
 }
 

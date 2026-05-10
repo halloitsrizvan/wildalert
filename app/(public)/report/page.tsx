@@ -20,6 +20,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { AlertTriangle, MapPin, Camera, Shield } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
+import { useCommunity } from "@/hooks/useCommunity";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const reportSchema = z.object({
   animalType: z.string().min(2, "Animal type is required"),
@@ -30,6 +34,16 @@ const reportSchema = z.object({
 });
 
 export default function ReportPage() {
+  const { currentCommunity } = useCommunity();
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, authLoading, router]);
+
   const form = useForm<z.infer<typeof reportSchema>>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
@@ -41,9 +55,16 @@ export default function ReportPage() {
     },
   });
 
+  if (authLoading || !user) return <div className="h-screen bg-black flex items-center justify-center text-primary uppercase font-bold animate-pulse">Establishing Session...</div>;
+
   function onSubmit(values: z.infer<typeof reportSchema>) {
-    console.log(values);
-    alert("Report submitted successfully to the Command Center.");
+    const reportData = {
+      ...values,
+      communityId: currentCommunity?.id || null,
+      timestamp: new Date().toISOString(),
+    };
+    console.log("Submitting Intelligence:", reportData);
+    alert(`Intelligence submitted to ${currentCommunity ? currentCommunity.name : "the Global Command Center"}.`);
   }
 
   return (
@@ -64,6 +85,14 @@ export default function ReportPage() {
                 <CardDescription className="text-white/50 font-medium">
                   Direct intelligence line to Kerala Forest Authorities. Immediate response active.
                 </CardDescription>
+                {currentCommunity && (
+                  <div className="mt-4 flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                      Connected to {currentCommunity.name} Intelligence Network
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </CardHeader>
