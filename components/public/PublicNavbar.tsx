@@ -52,8 +52,8 @@ export function PublicNavbar() {
           {user ? (
             <div className="flex items-center gap-4">
               <div className="flex flex-col items-end">
-                <span className="text-[10px] font-black uppercase text-primary tracking-widest">{user.role.replace('_', ' ')}</span>
-                <span className="text-xs font-bold text-white">ID: {user.id.slice(0, 5)}</span>
+                <span className="text-[10px] font-black uppercase text-white tracking-widest">{user.role.replace('_', ' ')}</span>
+                <span className="text-xs font-bold text-white">{user.name}</span>
               </div>
               <Button size="sm" variant="outline" onClick={logout} className="border-white/10 hover:bg-white/5 text-white">
                 Logout

@@ -182,7 +182,7 @@ function CommunitySignupFlow({ onBack }: { onBack: () => void }) {
   const router = useRouter();
 
   const handleFinish = async () => {
-    login('community_authority');
+    login('community_authority', undefined, placeName);
     router.push("/dashboard");
   };
 

@@ -13,7 +13,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (role: UserRole, communityId?: string) => void;
+  login: (role: UserRole, communityId?: string, name?: string) => void;
   logout: () => void;
 }
 
@@ -31,10 +31,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }, []);
 
-  const login = (role: UserRole, communityId?: string) => {
+  const login = (role: UserRole, communityId?: string, name?: string) => {
     const newUser: User = {
       id: Math.random().toString(36).substr(2, 9),
-      name: role === 'community_authority' ? "Authority User" : "Community User",
+      name: name || (role === 'community_authority' ? "Authority User" : "Community User"),
       role,
       communityId
     };
