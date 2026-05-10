@@ -8,7 +8,7 @@ export const MOCK_REPORTS: WildlifeReport[] = [
     severity: "high",
     status: "verified",
     reportedBy: "Ranger Somu",
-    timestamp: new Date(),
+    timestamp: new Date("2024-05-10T10:00:00Z"),
     description: "Herd of 5 elephants spotted near forest edge."
   },
   {
@@ -18,7 +18,7 @@ export const MOCK_REPORTS: WildlifeReport[] = [
     severity: "critical",
     status: "pending",
     reportedBy: "Local Villager",
-    timestamp: new Date(),
+    timestamp: new Date("2024-05-10T10:00:00Z"),
     description: "Tiger seen near cattle grazing area."
   },
   {
@@ -28,7 +28,7 @@ export const MOCK_REPORTS: WildlifeReport[] = [
     severity: "medium",
     status: "resolved",
     reportedBy: "CCTV",
-    timestamp: new Date(),
+    timestamp: new Date("2024-05-10T10:00:00Z"),
     description: "Leopard crossing the main road."
   }
 ];
@@ -63,7 +63,7 @@ export const MOCK_ALERTS: Alert[] = [
     title: "Elephant Intrusion",
     message: "Herd moving towards Attappady village sector 4.",
     type: "danger",
-    timestamp: new Date(),
+    timestamp: new Date("2024-05-10T10:00:00Z"),
     villageId: "v1"
   },
   {
@@ -71,7 +71,7 @@ export const MOCK_ALERTS: Alert[] = [
     title: "Forest Fire Warning",
     message: "High temperature detected in Wayanad zone.",
     type: "warning",
-    timestamp: new Date()
+    timestamp: new Date("2024-05-10T10:00:00Z")
   }
 ];
 
@@ -82,7 +82,7 @@ export const MOCK_RANGERS: Ranger[] = [
     rank: "Senior Ranger",
     status: "active",
     location: { lat: 10.85, lng: 76.27 },
-    lastActive: new Date()
+    lastActive: new Date("2024-05-10T10:00:00Z")
   },
   {
     id: "r2",
@@ -90,7 +90,7 @@ export const MOCK_RANGERS: Ranger[] = [
     rank: "Field Officer",
     status: "on-duty",
     location: { lat: 11.6, lng: 76.08 },
-    lastActive: new Date()
+    lastActive: new Date("2024-05-10T10:00:00Z")
   }
 ];
 

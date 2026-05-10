@@ -8,9 +8,8 @@ import { useState } from "react";
 
 const navItems = [
   { name: "Live Map", href: "/map", icon: Map },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "Alerts", href: "/alerts", icon: AlertTriangle },
-  { name: "Rangers", href: "/rangers", icon: Shield },
+  { name: "Alert Feed", href: "/alerts", icon: Activity },
+  { name: "Intelligence", href: "/#features", icon: Shield },
 ];
 
 export function Navbar() {
